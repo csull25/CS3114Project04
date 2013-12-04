@@ -115,18 +115,4 @@ public class BufferPoolTest
         file.close();
     }
 
-    /**
-     * Test.
-     *
-     * @throws IOException
-     *
-                 public void testExtra() throws IOException { BufferPool bp =
-     *             new BufferPool("mytest_2 - Copy.dat", 2); bp.swap(0, 1024*2 -
-     *             1); bp.flushBuffers(); bp.closeFile(); RandomAccessFile f =
-     *             new RandomAccessFile("mytest_2 - Copy.dat", "r");
-     *             assertEquals((32 << 8) + 86, f.readShort()); f.seek(4*(1024*2
-     *             - 1)); assertEquals((32 << 8) + 65, f.readShort());
-     *             f.close(); }
-     */
-
 }

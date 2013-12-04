@@ -2,9 +2,8 @@
 /**
  * Class that represents an internal node of a BinTree. It contains no data
  * elements, but has pointers to its children.
- * 
+ *
  * @author Connor J. Sullivan (csull)
- * @author Shane Todd (rstodd13)
  * @version 2013.10.04
  */
 
@@ -28,7 +27,7 @@ public class BinInternalNode
 
     /**
      * Gets the pointer to left.
-     * 
+     *
      * @return the left field
      */
     public BinNode getLeft()
@@ -39,7 +38,7 @@ public class BinInternalNode
 
     /**
      * Gets the pointer to the right.
-     * 
+     *
      * @return the right field
      */
     public BinNode getRight()
@@ -50,7 +49,7 @@ public class BinInternalNode
 
     /**
      * Sets the pointer left to the new value.
-     * 
+     *
      * @param newLeft
      *            the new left
      */
@@ -62,7 +61,7 @@ public class BinInternalNode
 
     /**
      * Sets the pointer right to the new value.
-     * 
+     *
      * @param newRight
      *            the new right
      */
@@ -73,7 +72,7 @@ public class BinInternalNode
 
 
     // ----------------------------------------------------------
-    @Override
+
     /**
      * Returns whether or not the node is a leaf node.
      *

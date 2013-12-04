@@ -1,5 +1,3 @@
-import realtimeweb.earthquakeservice.domain.Coordinate;
-
 // -------------------------------------------------------------------------
 /**
  * This class represents a BinTree. It is a binary tree with multi-dimensional

@@ -5,8 +5,8 @@ import junit.framework.TestCase;
  * Tests the BinTree class.
  *
  * @author Connor J. Sullivan (csull)
- * @author Shane Todd (rstodd13)
  * @version 2013.10.14
+ * @version 2013.12.04 (minor update)
  */
 
 public class BinTreeTest
@@ -77,7 +77,7 @@ public class BinTreeTest
 
     /**
      * Test method for
-     * {@link BinTree#remove(realtimeweb.earthquakeservice.domain.Coordinate)}.
+     * {@link BinTree#remove(Coordinate)}.
      */
     public void testRemove()
     {
@@ -113,7 +113,7 @@ public class BinTreeTest
 
     /**
      * Test method for
-     * {@link BinTree#find(realtimeweb.earthquakeservice.domain.Coordinate)}.
+     * {@link BinTree#find(Coordinate)}.
      */
     public void testFind()
     {

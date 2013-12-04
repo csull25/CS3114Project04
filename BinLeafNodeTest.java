@@ -5,7 +5,6 @@ import junit.framework.TestCase;
  * Test class for the BinLeafNode class.
  *
  * @author Connor J. Sullivan (csull)
- * @author Shane Todd (rstodd13)
  * @version 2013.10.04
  */
 

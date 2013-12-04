@@ -79,7 +79,7 @@ public class CoordinateTest
      */
     public void testToString()
     {
-        assertEquals("0 1", c.toString());
+        assertEquals("0.0 1.0", c.toString());
     }
 
 }

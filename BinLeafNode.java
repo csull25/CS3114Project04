@@ -5,7 +5,6 @@
  * then this class represents an empty leaf node.
  *
  * @author Connor J. Sullivan (csull)
- * @author Shane Todd (rstodd13)
  * @version 2013.10.04
  * @param <T>
  *            a generic object that implements the HasCoordinate interface
@@ -43,7 +42,6 @@ public class BinLeafNode<T extends HasCoordinate>
 
 
     // ----------------------------------------------------------
-    @Override
     /**
      * Returns whether or not the node is a leaf node.
      *
