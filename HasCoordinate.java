@@ -1,12 +1,11 @@
-import realtimeweb.earthquakeservice.domain.Coordinate;
 
 // -------------------------------------------------------------------------
 /**
  * Interface that is used to generalize a class that has a coordinate.
  *
  * @author Connor J. Sullivan (csull)
- * @author Shane Todd (rstodd13)
  * @version 2013.10.14
+ * @version 2013.12.04 (updated)
  */
 
 public interface HasCoordinate

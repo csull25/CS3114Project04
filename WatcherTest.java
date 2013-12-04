@@ -62,7 +62,6 @@ public class WatcherTest
     {
         assertEquals(0, watcher.getCoordinate().getLongitude(), .001);
         assertEquals(1, watcher.getCoordinate().getLatitude(), .001);
-        assertEquals(0, watcher.getCoordinate().getDepth(), .001);
     }
 
 
@@ -76,17 +75,6 @@ public class WatcherTest
         assertTrue(watcher.equals(new Watcher("tester", 2, 3)));
     }
 
-
-    /**
-     * Test method for {@link Watcher#compareTo(Watcher)}.
-     */
-    public void testCompareTo()
-    {
-        Watcher other = new Watcher("other", 0, 1);
-        assertEquals(0, watcher.compareTo(watcher));
-        assertTrue(watcher.compareTo(other) > 0);
-        assertTrue(watcher.compareTo(other) > 0);
-    }
 
     /**
      * Test method for {@link Watcher#toString()}.

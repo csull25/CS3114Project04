@@ -1,4 +1,3 @@
-import realtimeweb.earthquakeservice.domain.Coordinate;
 
 // -------------------------------------------------------------------------
 /**
@@ -10,10 +9,11 @@ import realtimeweb.earthquakeservice.domain.Coordinate;
  * @version 2013.09.09
  * @version 2013.09.16 (commenting)
  * @version 2013.10.03 (updates)
+ * @version 2013.12.04 (updated)
  */
 
 public class Watcher
-    implements Comparable<Watcher>, HasCoordinate
+    implements HasCoordinate
 {
     /**
      * The name of the watcher
@@ -36,7 +36,7 @@ public class Watcher
     public Watcher(String name, double longitude, double latitude)
     {
         this.name = name;
-        this.coordinate = new Coordinate(longitude, latitude, 0);
+        this.coordinate = new Coordinate(longitude, latitude);
     }
 
 
@@ -93,21 +93,6 @@ public class Watcher
     }
 
 
-    // ----------------------------------------------------------
-    @Override
-    /**
-     * Overrides the compareTo method of the Comparable interface. This compares
-     * only the names of the two watchers. It utilizes the String compareTo
-     * method with regards to the names of the watchers.
-     *
-     * @return the String compareTo method with regards to the watcher's names
-     */
-    public int compareTo(Watcher other)
-    {
-        return this.name.compareTo(other.getName());
-    }
-
-
     @Override
     /**
      * Overrides the toString method.
@@ -116,12 +101,6 @@ public class Watcher
      */
     public String toString()
     {
-        String longitude = "" + getLongitude();
-        String latitude = "" + getLatitude();
-
-        longitude = longitude.substring(0, longitude.indexOf('.') + 2);
-        latitude = latitude.substring(0, latitude.indexOf('.') + 2);
-
-        return getName() + " " + longitude + " " + latitude;
+        return getName() + " " + getCoordinate();
     }
 }
