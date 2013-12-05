@@ -15,7 +15,7 @@ public class BufferPool
     /**
      * Size of a block: 4096 bytes
      */
-    public final int           BLOCK_SIZE        = 4096;
+    public int           BLOCK_SIZE; //       = 4096;
     /**
      * Size of a record: 4 bytes
      */
@@ -23,7 +23,7 @@ public class BufferPool
     /**
      * Number of records per block: 1024 records
      */
-    public final int           RECORDS_PER_BLOCK = 1024;
+    public int           RECORDS_PER_BLOCK; //= 1024;
     private LinkedList<Buffer> pool;
     private RandomAccessFile   file;
     private byte[]             tempArray;
@@ -45,6 +45,44 @@ public class BufferPool
     public BufferPool(String fileName, int numBuffers)
         throws IOException
     {
+        BLOCK_SIZE = 4096;
+        RECORDS_PER_BLOCK = 1024;
+        // create linked list of buffers, open file, create pointer tempArray
+        this.pool = new LinkedList<Buffer>();
+        this.file = new RandomAccessFile(fileName, "rw");
+        this.tempArray = new byte[BLOCK_SIZE];
+
+        // initialize all the statistics to zero
+        cacheHits = cacheMisses = diskReads = diskWrites = 0;
+
+        // initialize the appropriate number of buffers
+        for (int i = 0; i < numBuffers; i++)
+        {
+            file.seek(i * BLOCK_SIZE);
+            file.read(tempArray);
+            cacheMisses++;
+            diskReads++;
+            pool.append(new Buffer(tempArray, i));
+        }
+    }
+
+
+    /**
+     * Create a new ByteBufferPool object.
+     *
+     * @param fileName
+     *            the name of the file
+     * @param numBuffers
+     *            number of buffers in the buffer pool
+     * @param bufferSize
+     *            size of each buffer in bytes
+     * @throws IOException
+     */
+    public BufferPool(String fileName, int numBuffers, int bufferSize)
+        throws IOException
+    {
+        BLOCK_SIZE = bufferSize;
+
         // create linked list of buffers, open file, create pointer tempArray
         this.pool = new LinkedList<Buffer>();
         this.file = new RandomAccessFile(fileName, "rw");
