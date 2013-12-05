@@ -27,4 +27,31 @@ public class MemoryManager {
     public MemoryManager(int buffers, int buffer_size) throws IOException {
         pool = new BufferPool(FILENAME, buffers, buffer_size);
     }
+
+    // ----------------------------------------------------------
+    /**
+     * Write bytes to write
+     * @param b bytes to write
+     * @return Handle that points to written data
+     */
+    public Handle write(byte[] b) {
+        // start at last_viewed and find spot big enough
+
+        // return handle
+        return null;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns bytes for handle
+     * @param h handle for retrieval
+     * @return bytes for handle
+     */
+    public byte[] read(Handle h) {
+        // get handle's data and return bytes
+
+        return null;
+    }
+
+
 }
