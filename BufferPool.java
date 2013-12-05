@@ -206,6 +206,25 @@ public class BufferPool
         return buffer;
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Get array of bytes from file
+     * @param position position to start
+     * @param size number of bytes to get
+     * @return array of bytes
+     * @throws IOException
+     */
+    public byte[] getData(int position, int size) throws IOException {
+        // data may need to be retrieved from multiple buffers
+        byte[] b = new byte[size];
+        Buffer buf;
+        for (int i = 0; i < size; i++) {
+            buf = getBuffer((position + i) / BLOCK_SIZE);
+            b[i] = buf.getByte((position + i) % BLOCK_SIZE);
+        }
+        return null;
+    }
+
 
     /**
      * Flushes the remaining buffers.

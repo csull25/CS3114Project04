@@ -75,6 +75,16 @@ public class Buffer
         return byteArray;
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Get byte from buffer
+     * @param pos position of byte in byte array
+     * @return Byte from array
+     */
+    public byte getByte(int pos) {
+        return byteArray[pos];
+    }
+
 
     /**
      * Marks the buffer as changed, so that when the block is flushed it knows

@@ -11,7 +11,7 @@
 public class Handle
 {
     /**  */
-    int position;
+    private int position;
     // ----------------------------------------------------------
     /**
      * Create a new Handle object.

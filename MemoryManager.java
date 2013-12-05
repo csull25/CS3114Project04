@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.io.IOException;
 
 
@@ -16,6 +17,8 @@ public class MemoryManager {
     BufferPool pool;
     /** Last position looked at for placement of data */
     int last_viewed;
+    /** Number of bytes representing data size */
+    private static int SIZE_BYTES = 2;
 
     // ----------------------------------------------------------
     /**
@@ -38,7 +41,32 @@ public class MemoryManager {
         // start at last_viewed and find spot big enough
 
         // return handle
+        return write(b, findSpace(b.length));
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Write bytes to given position
+     * @param b bytes to write
+     * @param pos position to write to
+     * @return Handle that points to written data
+     */
+    private Handle write(byte[] b, int pos) {
+
+
         return null;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Find space big enough for data
+     * @param size size of data
+     * @return Position to write data
+     */
+    private int findSpace(int size) {
+
+
+        return 0;
     }
 
     // ----------------------------------------------------------
@@ -46,9 +74,14 @@ public class MemoryManager {
      * Returns bytes for handle
      * @param h handle for retrieval
      * @return bytes for handle
+     * @throws IOException
      */
-    public byte[] read(Handle h) {
+    public byte[] read(Handle h) throws IOException {
         // get handle's data and return bytes
+        byte[] size_bytes = pool.getData(h.getPosition(), SIZE_BYTES);
+        ByteBuffer bytes = ByteBuffer.wrap(size_bytes);
+        int size = bytes.getShort();
+
 
         return null;
     }
