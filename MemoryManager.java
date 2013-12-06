@@ -36,12 +36,24 @@ public class MemoryManager {
      * Write bytes to write
      * @param b bytes to write
      * @return Handle that points to written data
+     * @throws IOException
      */
-    public Handle write(byte[] b) {
+    public Handle write(byte[] b) throws IOException {
         // start at last_viewed and find spot big enough
+        int pos = findSpace(b.length);
+        write(b, pos);
+        return new Handle(pos);
+    }
 
-        // return handle
-        return write(b, findSpace(b.length));
+    // ----------------------------------------------------------
+    /**
+     * Write data to handle's position
+     * @param b byte array to write
+     * @param h handle for position
+     * @throws IOException
+     */
+    public void write(byte[] b, Handle h) throws IOException {
+        write(b, h.getPosition());
     }
 
     // ----------------------------------------------------------
@@ -49,12 +61,10 @@ public class MemoryManager {
      * Write bytes to given position
      * @param b bytes to write
      * @param pos position to write to
-     * @return Handle that points to written data
+     * @throws IOException
      */
-    private Handle write(byte[] b, int pos) {
-
-
-        return null;
+    private void write(byte[] b, int pos) throws IOException {
+        pool.writeData(b, pos);
     }
 
     // ----------------------------------------------------------
@@ -83,8 +93,7 @@ public class MemoryManager {
         int size = bytes.getShort();
 
         // get handle's data and return bytes
-
-        return null;
+        return pool.getData(h.getPosition(), size);
     }
 
 
