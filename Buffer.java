@@ -85,6 +85,16 @@ public class Buffer
         return byteArray[pos];
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Set byte value at given position
+     * @param b byte value
+     * @param pos position of byte
+     */
+    public void setByte(byte b, int pos) {
+        byteArray[pos] = b;
+    }
+
 
     /**
      * Marks the buffer as changed, so that when the block is flushed it knows

@@ -77,11 +77,12 @@ public class MemoryManager {
      * @throws IOException
      */
     public byte[] read(Handle h) throws IOException {
-        // get handle's data and return bytes
+        // get size of data
         byte[] size_bytes = pool.getData(h.getPosition(), SIZE_BYTES);
         ByteBuffer bytes = ByteBuffer.wrap(size_bytes);
         int size = bytes.getShort();
 
+        // get handle's data and return bytes
 
         return null;
     }

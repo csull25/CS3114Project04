@@ -208,21 +208,47 @@ public class BufferPool
 
     // ----------------------------------------------------------
     /**
+     * Place a description of your method here.
+     * @param pos
+     * @return
+     * @throws IOException
+     */
+    private Buffer getBufferByPosition(int pos) throws IOException {
+        return getBuffer(pos / BLOCK_SIZE);
+    }
+
+    // ----------------------------------------------------------
+    /**
      * Get array of bytes from file
-     * @param position position to start
+     * @param pos position to start
      * @param size number of bytes to get
      * @return array of bytes
      * @throws IOException
      */
-    public byte[] getData(int position, int size) throws IOException {
+    public byte[] getData(int pos, int size) throws IOException {
         // data may need to be retrieved from multiple buffers
         byte[] b = new byte[size];
         Buffer buf;
         for (int i = 0; i < size; i++) {
-            buf = getBuffer((position + i) / BLOCK_SIZE);
-            b[i] = buf.getByte((position + i) % BLOCK_SIZE);
+            buf = getBufferByPosition(pos + i);
+            b[i] = buf.getByte((pos + i) % BLOCK_SIZE);
         }
-        return null;
+        return b;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Write data to buffer(s)
+     * @param b byte array to write
+     * @param pos position to begin writing
+     * @throws IOException
+     */
+    public void writeData(byte[] b, int pos) throws IOException {
+        Buffer buf;
+        for (int i = 0; i < b.length; i++) {
+            buf = getBufferByPosition(pos + i);
+            buf.setByte(b[i], pos);
+        }
     }
 
 
