@@ -248,6 +248,7 @@ public class BufferPool
         for (int i = 0; i < b.length; i++) {
             buf = getBufferByPosition(pos + i);
             buf.setByte(b[i], pos);
+            buf.markDirty();
         }
     }
 
