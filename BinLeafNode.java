@@ -15,6 +15,7 @@ public class BinLeafNode<T extends HasCoordinate>
 {
 
     private T element;
+    private int elementHandle;
 
 
     // ----------------------------------------------------------
@@ -50,6 +51,23 @@ public class BinLeafNode<T extends HasCoordinate>
     public boolean isLeafNode()
     {
         return true;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * 'Serializes' the node. It converts the node into a byte array.
+     *
+     * @return the byte array representing this node.
+     */
+    public byte[] serialize()
+    {
+        byte[] byteArray = new byte[5];
+        byteArray[0] = 0;
+        for (int i = 0; i < 4; i++) {
+            byteArray[1+i] = (byte)((elementHandle >> 24 - 8*i) & 0xFF);
+        }
+        return byteArray;
     }
 
 }

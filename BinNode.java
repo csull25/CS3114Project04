@@ -15,4 +15,12 @@ public interface BinNode
      */
     public boolean isLeafNode();
 
+
+    /**
+     * 'Serializes' the node. It converts the node into a byte array.
+     *
+     * @return the byte array representing this node.
+     */
+    public byte[] serialize();
+
 }

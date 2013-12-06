@@ -13,6 +13,8 @@ public class BinInternalNode
 
     private BinNode left;
     private BinNode right;
+    private int leftHandle;
+    private int rightHandle;
 
 
     // ----------------------------------------------------------
@@ -72,7 +74,6 @@ public class BinInternalNode
 
 
     // ----------------------------------------------------------
-
     /**
      * Returns whether or not the node is a leaf node.
      *
@@ -83,4 +84,21 @@ public class BinInternalNode
         return false;
     }
 
+
+    // ----------------------------------------------------------
+    /**
+     * 'Serializes' the node. It converts the node into a byte array.
+     *
+     * @return the byte array representing this node.
+     */
+    public byte[] serialize()
+    {
+        byte[] byteArray = new byte[9];
+        byteArray[0] = 0;
+        for (int i = 0; i < 4; i++) {
+            byteArray[1+i] = (byte)((leftHandle >> 24 - 8*i) & 0xFF);
+            byteArray[5+i] = (byte)((rightHandle >> 24 - 8*i) & 0xFF);
+        }
+        return byteArray;
+    }
 }

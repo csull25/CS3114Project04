@@ -39,6 +39,30 @@ public class BinTree<T extends HasCoordinate>
     // }
 
     /**
+     * 'De-serializes' the node. It converts the given byte array into a
+     * binNode.
+     *
+     * @param byteArray
+     *            the byteArray representation to be converted
+     * @return the BinNode that was represented by the given byte array
+     */
+    public BinNode deserialize(byte[] byteArray)
+    {
+        if (byteArray.length == 5) {
+            // do leaf node stuff plus check if flywieght
+            return null;
+        }
+        else if (byteArray.length == 9) {
+            // do internal node stuff
+            return null;
+        }
+        else {
+            return null;
+        }
+    }
+
+
+    /**
      * Gets the root of the tree.
      *
      * @return the root field
