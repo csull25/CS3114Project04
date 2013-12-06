@@ -5,14 +5,14 @@ import junit.framework.TestCase;
  * Test class for the BinLeafNode class.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.10.04
+ * @version 2013.12.05
  */
 
 public class BinLeafNodeTest
     extends TestCase
 {
 
-    private BinLeafNode<Watcher> node;
+    private BinLeafNode node;
 
 
     // ----------------------------------------------------------
@@ -20,7 +20,7 @@ public class BinLeafNodeTest
     protected void setUp()
         throws Exception
     {
-        node = new BinLeafNode<Watcher>(new Watcher("Test", 0, 1));
+        node = new BinLeafNode(new Handle(1));
     }
 
 
@@ -29,9 +29,7 @@ public class BinLeafNodeTest
      */
     public void testGetElement()
     {
-        assertEquals("Test", node.getElement().getName());
-        assertEquals(0.0, node.getElement().getLongitude(), .001);
-        assertEquals(1, node.getElement().getLatitude(), .001);
+        assertEquals(1, node.getElement().getPosition());
     }
 
 

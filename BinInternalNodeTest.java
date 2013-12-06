@@ -42,24 +42,24 @@ public class BinInternalNodeTest
 
 
     /**
-     * Test method for {@link BinInternalNode#setLeft(BinNode)}.
+     * Test method for {@link BinInternalNode#setLeft(Handle)}.
      */
     public void testSetLeft()
     {
-        Watcher test01 = new Watcher("test", 0, 1);
-        node.setLeft(new BinLeafNode<Watcher>(test01));
-        assertEquals(test01, ((BinLeafNode<?>)(node.getLeft())).getElement());
+        Handle h = new Handle(13);
+        node.setLeft(new BinLeafNode(h).getElement());
+        assertEquals(h, node.getLeft());
     }
 
 
     /**
-     * Test method for {@link BinInternalNode#setRight(BinNode)}.
+     * Test method for {@link BinInternalNode#setRight(Handle)}.
      */
     public void testSetRight()
     {
-        BinInternalNode otherNode = new BinInternalNode();
-        node.setRight(otherNode);
-        assertEquals(otherNode, node.getRight());
+        Handle h = new Handle(31);
+        node.setRight(h);
+        assertEquals(h, node.getRight());
     }
 
 

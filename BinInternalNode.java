@@ -1,20 +1,18 @@
 // -------------------------------------------------------------------------
 /**
  * Class that represents an internal node of a BinTree. It contains no data
- * elements, but has pointers to its children.
+ * elements, but has handles to its children.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.10.04
+ * @version 2013.12.05
  */
 
 public class BinInternalNode
     implements BinNode
 {
 
-    private BinNode left;
-    private BinNode right;
-    private int leftHandle;
-    private int rightHandle;
+    private Handle left;
+    private Handle right;
 
 
     // ----------------------------------------------------------
@@ -27,12 +25,28 @@ public class BinInternalNode
     }
 
 
+    // ----------------------------------------------------------
+    /**
+     * Create a new BinInternalNode object.
+     *
+     * @param left
+     *            the left Handle
+     * @param right
+     *            the right Handle
+     */
+    public BinInternalNode(Handle left, Handle right)
+    {
+        this.left = left;
+        this.right = right;
+    }
+
+
     /**
      * Gets the pointer to left.
      *
      * @return the left field
      */
-    public BinNode getLeft()
+    public Handle getLeft()
     {
         return this.left;
     }
@@ -43,7 +57,7 @@ public class BinInternalNode
      *
      * @return the right field
      */
-    public BinNode getRight()
+    public Handle getRight()
     {
         return this.right;
     }
@@ -55,7 +69,7 @@ public class BinInternalNode
      * @param newLeft
      *            the new left
      */
-    public void setLeft(BinNode newLeft)
+    public void setLeft(Handle newLeft)
     {
         this.left = newLeft;
     }
@@ -67,7 +81,7 @@ public class BinInternalNode
      * @param newRight
      *            the new right
      */
-    public void setRight(BinNode newRight)
+    public void setRight(Handle newRight)
     {
         this.right = newRight;
     }
@@ -95,9 +109,12 @@ public class BinInternalNode
     {
         byte[] byteArray = new byte[9];
         byteArray[0] = 0;
-        for (int i = 0; i < 4; i++) {
-            byteArray[1+i] = (byte)((leftHandle >> 24 - 8*i) & 0xFF);
-            byteArray[5+i] = (byte)((rightHandle >> 24 - 8*i) & 0xFF);
+        for (int i = 0; i < 4; i++)
+        {
+            byteArray[i + 1] =
+                (byte)((left.getPosition() >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 5] =
+                (byte)((right.getPosition() >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }

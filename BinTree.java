@@ -4,16 +4,15 @@
  * searching features.
  *
  * @author Connor J. Sullivan (csull)
- * @author Shane Todd (rstodd13)
- * @version 2013.10.14
+ * @version 2013.12.05
  * @param <T>
  *            a generic object that implements the HasCoordinate interface
  */
 
 public class BinTree<T extends HasCoordinate>
 {
-    private BinNode        root;
-    private BinLeafNode<T> emptyLeafNode;
+    private BinNode     root;
+    private BinLeafNode emptyLeafNode;
 
 
     /**
@@ -22,7 +21,7 @@ public class BinTree<T extends HasCoordinate>
     public BinTree()
     {
         this.root = null;
-        this.emptyLeafNode = new BinLeafNode<T>(null);
+        this.emptyLeafNode = new BinLeafNode(null);
     }
 
 
@@ -48,15 +47,27 @@ public class BinTree<T extends HasCoordinate>
      */
     public BinNode deserialize(byte[] byteArray)
     {
-        if (byteArray.length == 5) {
-            // do leaf node stuff plus check if flywieght
-            return null;
+        if (byteArray.length == 5)
+        {
+            int handle = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                handle += byteArray[i + 1] << (24 - 8 * i);
+            }
+            return new BinLeafNode(new Handle(handle));
         }
-        else if (byteArray.length == 9) {
-            // do internal node stuff
-            return null;
+        else if (byteArray.length == 9)
+        {
+            int handle1 = 0, handle2 = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                handle1 += byteArray[i + 1] << (24 - 8 * i);
+                handle2 += byteArray[i + 5] << (24 - 8 * i);
+            }
+            return new BinInternalNode(new Handle(handle1), new Handle(handle2));
         }
-        else {
+        else
+        {
             return null;
         }
     }
@@ -88,12 +99,12 @@ public class BinTree<T extends HasCoordinate>
      * @param element
      *            the new element to be added
      */
-    public void insert(T element)
+    public void insert(Handle element)
     {
         // make the new element the root if the root is null
         if (root == null)
         {
-            root = new BinLeafNode<T>(element);
+            root = new BinLeafNode(element);
         }
         else
         {
@@ -103,7 +114,7 @@ public class BinTree<T extends HasCoordinate>
             {
                 BinInternalNode newRoot = new BinInternalNode();
 
-                if (((BinLeafNode<?>)root).getElement().getLongitude() < 0.0)
+                if (((BinLeafNode)root).getElement().getLongitude() < 0.0)
                 {
                     newRoot.setLeft(root);
                     newRoot.setRight(emptyLeafNode);
@@ -165,9 +176,9 @@ public class BinTree<T extends HasCoordinate>
         // coordinate. If it matches, then remove it; otherwise don't
         if (root.isLeafNode())
         {
-            if (((BinLeafNode<?>)root).getElement().getCoordinate()
-                .getLongitude() == coordinate.getLongitude()
-                && ((BinLeafNode<?>)root).getElement().getCoordinate()
+            if (((BinLeafNode)root).getElement().getCoordinate().getLongitude() == coordinate
+                .getLongitude()
+                && ((BinLeafNode)root).getElement().getCoordinate()
                     .getLatitude() == coordinate.getLatitude())
             {
                 root = null;
@@ -194,9 +205,9 @@ public class BinTree<T extends HasCoordinate>
             }
             if (rightChild.isLeafNode()
                 && rightChild != emptyLeafNode
-                && ((BinLeafNode<?>)rightChild).getElement().getCoordinate()
+                && ((BinLeafNode)rightChild).getElement().getCoordinate()
                     .getLongitude() == coordinate.getLongitude()
-                && ((BinLeafNode<?>)rightChild).getElement().getCoordinate()
+                && ((BinLeafNode)rightChild).getElement().getCoordinate()
                     .getLatitude() == coordinate.getLatitude())
             {
                 ((BinInternalNode)root).setRight(emptyLeafNode);
@@ -424,7 +435,7 @@ public class BinTree<T extends HasCoordinate>
      *            the maximum latitude for the current bounding box
      */
     private void insert(
-        T element,
+        Handle element,
         BinNode node,
         BinInternalNode parent,
         int depth,
@@ -440,7 +451,7 @@ public class BinTree<T extends HasCoordinate>
             // given element
             if (node == emptyLeafNode)
             {
-                BinLeafNode<T> newLeafNode = new BinLeafNode<T>(element);
+                BinLeafNode newLeafNode = new BinLeafNode(element);
                 if (nodeIsALeftChild)
                 {
                     parent.setLeft(newLeafNode);
@@ -459,7 +470,7 @@ public class BinTree<T extends HasCoordinate>
                 BinInternalNode newInternalNode = new BinInternalNode();
                 if (depth % 2 == 0)
                 {
-                    if (((BinLeafNode<?>)node).getElement().getLongitude() + 180 < (minLongitude + maxLongitude) / 2.0)
+                    if (((BinLeafNode)node).getElement().getLongitude() + 180 < (minLongitude + maxLongitude) / 2.0)
                     {
                         newInternalNode.setLeft(node);
                         newInternalNode.setRight(emptyLeafNode);
@@ -473,7 +484,7 @@ public class BinTree<T extends HasCoordinate>
                 // else if (depth % 2 == 1)
                 else
                 {
-                    if (((BinLeafNode<?>)node).getElement().getLatitude() + 90 < (minLatitude + maxLatitude) / 2.0)
+                    if (((BinLeafNode)node).getElement().getLatitude() + 90 < (minLatitude + maxLatitude) / 2.0)
                     {
                         newInternalNode.setLeft(node);
                         newInternalNode.setRight(emptyLeafNode);
@@ -618,9 +629,9 @@ public class BinTree<T extends HasCoordinate>
             // remove that node by replacing it with an empty leaf node. The
             // specifics of the replacing is determined by the ancestry of the
             // node being replaced.
-            if (((BinLeafNode<?>)node).getElement().getCoordinate()
-                .getLongitude() == coordinate.getLongitude()
-                && ((BinLeafNode<?>)node).getElement().getCoordinate()
+            if (((BinLeafNode)node).getElement().getCoordinate().getLongitude() == coordinate
+                .getLongitude()
+                && ((BinLeafNode)node).getElement().getCoordinate()
                     .getLatitude() == coordinate.getLatitude())
             {
                 if (nodeHasALeftParent)
@@ -957,7 +968,7 @@ public class BinTree<T extends HasCoordinate>
         {
             if (node != emptyLeafNode)
             {
-                HasCoordinate element = ((BinLeafNode<?>)node).getElement();
+                HasCoordinate element = ((BinLeafNode)node).getElement();
 
                 if (Math.pow(element.getLatitude()
                     - (minLatitude + maxLatitude) / 2.0, 2)
@@ -1127,7 +1138,7 @@ public class BinTree<T extends HasCoordinate>
             // If the node is a filled leaf node, print its element.
             else
             {
-                return "\n" + ((BinLeafNode<?>)node).getElement() + "\n";
+                return "\n" + ((BinLeafNode)node).getElement() + "\n";
             }
         }
         // If the node is internal, print I and then call the recursive method

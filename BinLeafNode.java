@@ -1,21 +1,18 @@
 // -------------------------------------------------------------------------
 /**
  * Class that represents a leaf node for a BinTree. It contains only a single
- * data element, but has no pointers to other nodes. If the element is null,
- * then this class represents an empty leaf node.
+ * handle to a data element, but has no handles to other nodes. If the handle
+ * element is null, then this class represents an empty leaf node.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.10.04
- * @param <T>
- *            a generic object that implements the HasCoordinate interface
+ * @version 2013.12.05
  */
 
-public class BinLeafNode<T extends HasCoordinate>
+public class BinLeafNode
     implements BinNode
 {
 
-    private T element;
-    private int elementHandle;
+    private Handle element;
 
 
     // ----------------------------------------------------------
@@ -25,7 +22,7 @@ public class BinLeafNode<T extends HasCoordinate>
      * @param element
      *            the element stored in the BinLeafNode
      */
-    public BinLeafNode(T element)
+    public BinLeafNode(Handle element)
     {
         this.element = element;
     }
@@ -36,7 +33,7 @@ public class BinLeafNode<T extends HasCoordinate>
      *
      * @return the element field
      */
-    public T getElement()
+    public Handle getElement()
     {
         return this.element;
     }
@@ -64,8 +61,10 @@ public class BinLeafNode<T extends HasCoordinate>
     {
         byte[] byteArray = new byte[5];
         byteArray[0] = 0;
-        for (int i = 0; i < 4; i++) {
-            byteArray[1+i] = (byte)((elementHandle >> 24 - 8*i) & 0xFF);
+        for (int i = 0; i < byteArray.length; i++)
+        {
+            byteArray[i + 1] =
+                (byte)((element.getPosition() >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }
