@@ -15,8 +15,11 @@ public class MemoryManager {
     private static String FILENAME = "p4bin.dat";
     /** BufferPool object */
     BufferPool pool;
+    /** Size of file for storage */
+    private int file_size;
     /** Last position looked at for placement of data */
-    int last_viewed;
+    private int next_pos;
+    private LinkedQueue<FreeBlock> free_blocks;
     /** Number of bytes representing data size */
     private static int SIZE_BYTES = 2;
 
@@ -29,6 +32,7 @@ public class MemoryManager {
      */
     public MemoryManager(int buffers, int buffer_size) throws IOException {
         pool = new BufferPool(FILENAME, buffers, buffer_size);
+        file_size = buffer_size;
     }
 
     // ----------------------------------------------------------
@@ -39,7 +43,7 @@ public class MemoryManager {
      * @throws IOException
      */
     public Handle write(byte[] b) throws IOException {
-        // start at last_viewed and find spot big enough
+        // start at next_pos and find spot big enough
         int pos = findSpace(b.length);
         write(b, pos);
         return new Handle(pos);
@@ -72,11 +76,35 @@ public class MemoryManager {
      * Find space big enough for data
      * @param size size of data
      * @return Position to write data
+     * @throws IOException
      */
-    private int findSpace(int size) {
+    private int findSpace(int size) throws IOException {
+        int start = next_pos;
+        int taken_size;
+        do {
+            taken_size = bytesToShort(pool.getData(next_pos, 2));
+            if (taken_size == 0) {
+                // start writing - no data previously written beyond this point
+                nextPos(size);
+                return next_pos;
+            }
+            else {
+                // jump this data and go to next
+                nextPos(taken_size);
+            }
+        } while (next_pos != start);
 
 
-        return 0;
+        return -1;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Increment next_pos for a circular fit
+     * @param n number to increase by
+     */
+    private void nextPos(int n) {
+        next_pos = (next_pos + n) % file_size;
     }
 
     // ----------------------------------------------------------
@@ -89,11 +117,20 @@ public class MemoryManager {
     public byte[] read(Handle h) throws IOException {
         // get size of data
         byte[] size_bytes = pool.getData(h.getPosition(), SIZE_BYTES);
-        ByteBuffer bytes = ByteBuffer.wrap(size_bytes);
-        int size = bytes.getShort();
 
         // get handle's data and return bytes
-        return pool.getData(h.getPosition(), size);
+        return pool.getData(h.getPosition(), bytesToShort(size_bytes));
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Return short value of first 2 positions of byte array
+     * @param b byte array
+     * @return short value of b[0] and b[1]
+     */
+    private short bytesToShort(byte[] b) {
+        ByteBuffer bytes = ByteBuffer.wrap(b);
+        return bytes.getShort();
     }
 
 

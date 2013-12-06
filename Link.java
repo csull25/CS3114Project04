@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------------
 /**
  * A Link represents a single section of a sequence. This link is
- * "singly-linked" meaning that it has a pointer to the next Link in the
- * seqeunce (but no pointer to the previous Link Some of the ideas can be
+ * "doubly-linked" meaning that it has a pointer to the next and prev Links
+ * in the sequence. Link Some of the ideas can be
  * contribute to the CS2114 Lab08-DoublyLinkedDeque during the Fall 2012
  * semester with Tony Allevato.
  *
@@ -16,6 +16,7 @@ public class Link<T>
 {
     private T       data;
     private Link<T> next;
+    private Link<T> prev;
 
 
     // ----------------------------------------------------------
@@ -82,6 +83,17 @@ public class Link<T>
 
 
     /**
+     * Gets the link that precedes this one in the sequence.
+     *
+     * @return the link that precedes this one in the sequence
+     */
+    public Link<T> prev()
+    {
+        return prev;
+    }
+
+
+    /**
      * Sets the given Link to be the next Link in the sequence
      *
      * @param next
@@ -90,6 +102,30 @@ public class Link<T>
     public void setNext(Link<T> next)
     {
         this.next = next;
+    }
+
+
+    /**
+     * Sets the given Link to be the prev Link in the sequence
+     *
+     * @param prev
+     *            the Link to follow this one
+     */
+    public void setPrev(Link<T> prev)
+    {
+        this.prev = prev;
+    }
+
+    /**
+     * Set up forward and backward links for cur and next node
+     *
+     * @param next_node
+     *            node to follow current one
+     */
+    public void link(Link<T> next_node)
+    {
+        setNext(next_node);
+        next_node.setPrev(this);
     }
 
 }
