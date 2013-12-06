@@ -18,7 +18,7 @@ public class MemoryManager {
     /** Size of file for storage */
     private int file_size;
     /** Last position looked at for placement of data */
-    private int next_pos;
+    private FreeBlock next_pos;
     private LinkedQueue<FreeBlock> free_blocks;
     /** Number of bytes representing data size */
     private static int SIZE_BYTES = 2;
@@ -33,6 +33,9 @@ public class MemoryManager {
     public MemoryManager(int buffers, int buffer_size) throws IOException {
         pool = new BufferPool(FILENAME, buffers, buffer_size);
         file_size = buffer_size;
+        free_blocks = new LinkedQueue<FreeBlock>();
+        free_blocks.inqueue(new FreeBlock(0, buffer_size));
+        next_pos = free_blocks.peek();
     }
 
     // ----------------------------------------------------------
@@ -79,32 +82,20 @@ public class MemoryManager {
      * @throws IOException
      */
     private int findSpace(int size) throws IOException {
-        int start = next_pos;
-        int taken_size;
         do {
-            taken_size = bytesToShort(pool.getData(next_pos, 2));
-            if (taken_size == 0) {
-                // start writing - no data previously written beyond this point
-                nextPos(size);
-                return next_pos;
+            FreeBlock block = free_blocks.dequeue();
+            if (block.getSize() < size) {
+                // start writing - enough data
+
             }
             else {
                 // jump this data and go to next
-                nextPos(taken_size);
+                free_blocks.inqueue(block);
             }
-        } while (next_pos != start);
-
+        } while (next_pos != free_blocks.peek());
+        // no room so add more to file size
 
         return -1;
-    }
-
-    // ----------------------------------------------------------
-    /**
-     * Increment next_pos for a circular fit
-     * @param n number to increase by
-     */
-    private void nextPos(int n) {
-        next_pos = (next_pos + n) % file_size;
     }
 
     // ----------------------------------------------------------
