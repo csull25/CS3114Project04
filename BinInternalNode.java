@@ -4,13 +4,14 @@
  * elements, but has handles to its children.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.12.05
+ * @version 2013.12.07
  */
 
 public class BinInternalNode
     implements BinNode
 {
 
+    private Handle myHandle;
     private Handle left;
     private Handle right;
 
@@ -18,9 +19,13 @@ public class BinInternalNode
     // ----------------------------------------------------------
     /**
      * Create a new BinInternalNode object.
+     *
+     * @param myHandle
+     *            the handle to this node
      */
-    public BinInternalNode()
+    public BinInternalNode(Handle myHandle)
     {
+        this.myHandle = myHandle;
         left = right = null;
     }
 
@@ -29,20 +34,31 @@ public class BinInternalNode
     /**
      * Create a new BinInternalNode object.
      *
+     * @param myHandle the handle to this node
      * @param left
      *            the left Handle
      * @param right
      *            the right Handle
      */
-    public BinInternalNode(Handle left, Handle right)
+    public BinInternalNode(Handle myHandle, Handle left, Handle right)
     {
+        this.myHandle = myHandle;
         this.left = left;
         this.right = right;
     }
 
+    /**
+     * Returns the handle of this BinNode.
+     *
+     * @return the myHandle field
+     */
+    public Handle getMyHandle() {
+        return this.myHandle;
+    }
+
 
     /**
-     * Gets the pointer to left.
+     * Gets the handle to left.
      *
      * @return the left field
      */
@@ -53,7 +69,7 @@ public class BinInternalNode
 
 
     /**
-     * Gets the pointer to the right.
+     * Gets the handle to the right.
      *
      * @return the right field
      */
@@ -64,14 +80,14 @@ public class BinInternalNode
 
 
     /**
-     * Sets the pointer left to the new value.
+     * Sets the handle left to the new value.
      *
      * @param newLeft
      *            the new left
      */
-    public void setLeft(Handle newLeft)
+    public void setLeft(BinNode newLeft)
     {
-        this.left = newLeft;
+        this.left = newLeft.getMyHandle();
     }
 
 
@@ -81,9 +97,9 @@ public class BinInternalNode
      * @param newRight
      *            the new right
      */
-    public void setRight(Handle newRight)
+    public void setRight(BinNode newRight)
     {
-        this.right = newRight;
+        this.right = newRight.getMyHandle();
     }
 
 

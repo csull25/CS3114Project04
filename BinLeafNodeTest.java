@@ -5,7 +5,7 @@ import junit.framework.TestCase;
  * Test class for the BinLeafNode class.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.12.05
+ * @version 2013.12.07
  */
 
 public class BinLeafNodeTest
@@ -20,16 +20,23 @@ public class BinLeafNodeTest
     protected void setUp()
         throws Exception
     {
-        node = new BinLeafNode(new Handle(1));
+        node = new BinLeafNode(new Handle(1), new Handle(47));
     }
 
+    /**
+     * Test method for {@link BinLeafNode#getMyHandle()}.
+     */
+    public void testGetMyHandle()
+    {
+        assertEquals(1, node.getMyHandle().getPosition());
+    }
 
     /**
      * Test method for {@link BinLeafNode#getElement()}.
      */
     public void testGetElement()
     {
-        assertEquals(1, node.getElement().getPosition());
+        assertEquals(47, node.getElement().getPosition());
     }
 
 

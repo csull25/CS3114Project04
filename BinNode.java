@@ -3,7 +3,7 @@
  * Interface that defines a BinNode that will be used as a node in a BinTree.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.10.03
+ * @version 2013.12.07
  */
 
 public interface BinNode
@@ -14,6 +14,14 @@ public interface BinNode
      * @return true if it is a leaf node; false otherwise
      */
     public boolean isLeafNode();
+
+
+    /**
+     * Returns the handle of this BinNode.
+     *
+     * @return the myHandle field
+     */
+    public Handle getMyHandle();
 
 
     /**

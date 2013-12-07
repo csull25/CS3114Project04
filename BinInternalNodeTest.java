@@ -5,7 +5,7 @@ import junit.framework.TestCase;
  * Tests the BinInternalNode class.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.10.04
+ * @version 2013.12.07
  */
 
 public class BinInternalNodeTest
@@ -19,9 +19,17 @@ public class BinInternalNodeTest
     protected void setUp()
         throws Exception
     {
-        node = new BinInternalNode();
+        node = new BinInternalNode(new Handle(5));
     }
 
+
+    /**
+     * Test method for {@link BinInternalNode#getMyHandle()}.
+     */
+    public void testMyHandle()
+    {
+        assertEquals(5, node.getMyHandle().getPosition());
+    }
 
     /**
      * Test method for {@link BinInternalNode#getLeft()}.
@@ -42,23 +50,23 @@ public class BinInternalNodeTest
 
 
     /**
-     * Test method for {@link BinInternalNode#setLeft(Handle)}.
+     * Test method for {@link BinInternalNode#setLeft(BinNode)}.
      */
     public void testSetLeft()
     {
         Handle h = new Handle(13);
-        node.setLeft(new BinLeafNode(h).getElement());
+        node.setLeft(new BinLeafNode(h, new Handle(6)));
         assertEquals(h, node.getLeft());
     }
 
 
     /**
-     * Test method for {@link BinInternalNode#setRight(Handle)}.
+     * Test method for {@link BinInternalNode#setRight(BinNode)}.
      */
     public void testSetRight()
     {
         Handle h = new Handle(31);
-        node.setRight(h);
+        node.setRight(new BinLeafNode(h, new Handle(7)));
         assertEquals(h, node.getRight());
     }
 

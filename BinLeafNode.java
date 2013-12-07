@@ -5,13 +5,14 @@
  * element is null, then this class represents an empty leaf node.
  *
  * @author Connor J. Sullivan (csull)
- * @version 2013.12.05
+ * @version 2013.12.07
  */
 
 public class BinLeafNode
     implements BinNode
 {
 
+    private Handle myHandle;
     private Handle element;
 
 
@@ -19,12 +20,26 @@ public class BinLeafNode
     /**
      * Create a new BinLeafNode object.
      *
+     * @param myHandle
+     *            the handle to this node
      * @param element
      *            the element stored in the BinLeafNode
      */
-    public BinLeafNode(Handle element)
+    public BinLeafNode(Handle myHandle, Handle element)
     {
+        this.myHandle = myHandle;
         this.element = element;
+    }
+
+
+    /**
+     * Returns the handle of this BinNode.
+     *
+     * @return the myHandle field
+     */
+    public Handle getMyHandle()
+    {
+        return this.myHandle;
     }
 
 
