@@ -39,4 +39,22 @@ public class FreeBlock
     public int getSize() {
         return size;
     }
+
+    // ----------------------------------------------------------
+    /**
+     * Set the position of the block
+     * @param pos position of the block
+     */
+    public void setPosition(int pos) {
+        this.position = pos;
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Set the size of the block
+     * @param size size of the block
+     */
+    public void setSize(int size) {
+        this.size = size;
+    }
 }

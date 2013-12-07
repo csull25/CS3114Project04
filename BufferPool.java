@@ -273,11 +273,32 @@ public class BufferPool
      * Add enough 0 bytes for a new block at end of file
      * @throws IOException
      */
-    public void expandFile() throws IOException {
+    private void expandFile() throws IOException {
         file.seek(FILE_SIZE);
         for (int i = 0; i < BLOCK_SIZE; i++) {
             file.write(0);
         }
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Expand file and add extra size to free block at end of the file
+     * @param blocks queue of blocks
+     * @throws IOException
+     */
+    public void expandFile(LinkedQueue<FreeBlock> blocks) throws IOException {
+        FreeBlock first = blocks.peek();
+        FreeBlock block;
+        do {
+            block = blocks.peek();
+            if (block.getSize() + block.getPosition() == FILE_SIZE ) {
+                // last free block was at end of file and has been expanded
+                block.setSize(block.getSize() + BLOCK_SIZE);
+                return;
+            }
+            blocks.inqueue(blocks.dequeue());
+        } while (blocks.peek() != first);
+        expandFile();
     }
 
 

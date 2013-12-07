@@ -15,8 +15,6 @@ public class MemoryManager {
     private static String FILENAME = "p4bin.dat";
     /** BufferPool object */
     BufferPool pool;
-    /** Size of file for storage */
-    private int file_size;
     /** Last position looked at for placement of data */
     private FreeBlock next_pos;
     private LinkedQueue<FreeBlock> free_blocks;
@@ -32,7 +30,6 @@ public class MemoryManager {
      */
     public MemoryManager(int buffers, int buffer_size) throws IOException {
         pool = new BufferPool(FILENAME, buffers, buffer_size);
-        file_size = buffer_size;
         free_blocks = new LinkedQueue<FreeBlock>();
         free_blocks.inqueue(new FreeBlock(0, buffer_size));
         next_pos = free_blocks.peek();
@@ -82,11 +79,21 @@ public class MemoryManager {
      * @throws IOException
      */
     private int findSpace(int size) throws IOException {
+        FreeBlock block;
         do {
-            FreeBlock block = free_blocks.dequeue();
+            block = free_blocks.dequeue();
             if (block.getSize() < size) {
                 // start writing - enough data
-
+                if (block.getSize() == size) {
+                    // free block will be completely filled
+                    return block.getPosition();
+                }
+                // block is bigger than needed space
+                int space = block.getPosition();
+                block.setPosition(block.getPosition() + size);
+                block.setSize(block.getSize() - size);
+                free_blocks.inqueue(block);
+                return space;
             }
             else {
                 // jump this data and go to next
@@ -94,8 +101,8 @@ public class MemoryManager {
             }
         } while (next_pos != free_blocks.peek());
         // no room so add more to file size
-
-        return -1;
+        pool.expandFile(free_blocks);
+        return findSpace(size);
     }
 
     // ----------------------------------------------------------
