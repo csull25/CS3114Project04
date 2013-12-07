@@ -7,6 +7,7 @@ import junit.framework.TestCase;
  * @author Connor J. Sullivan (csull)
  * @version 2013.09.14
  * @version 2013.10.04 (updated)
+ * @version 2013.12.07 (updated)
  */
 
 public class WatcherTest
@@ -24,9 +25,17 @@ public class WatcherTest
         throws Exception
     {
         super.setUp();
-        watcher = new Watcher("tester", 0, 1);
+        watcher = new Watcher(new Handle(32), "tester", 0, 1);
     }
 
+
+    /**
+     * Test method for {@link Watcher#getHandle()}.
+     */
+    public void testGetHandle()
+    {
+        assertEquals(32, watcher.getHandle().getPosition());
+    }
 
     /**
      * Test method for {@link Watcher#getName()}.
@@ -72,7 +81,8 @@ public class WatcherTest
     {
         assertFalse(watcher.equals(null));
         assertFalse(watcher.equals("string"));
-        assertTrue(watcher.equals(new Watcher("tester", 2, 3)));
+        assertTrue(watcher.equals(new Watcher(new Handle(65), "tester", 2, 3)));
+        assertFalse(watcher.equals(new Watcher(new Handle(65), "test", 2, 3)));
     }
 
 

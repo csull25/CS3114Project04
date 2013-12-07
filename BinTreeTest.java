@@ -1,3 +1,4 @@
+import java.io.IOException;
 import junit.framework.TestCase;
 
 // -------------------------------------------------------------------------
@@ -14,6 +15,7 @@ public class BinTreeTest
 {
 
     private BinTree<Watcher> tree;
+    private MemoryManager    memoryManager;
 
 
     // ----------------------------------------------------------
@@ -22,7 +24,8 @@ public class BinTreeTest
         throws Exception
     {
         super.setUp();
-        tree = new BinTree<Watcher>();
+        this.memoryManager = new MemoryManager(1, 4096);
+        this.tree = new BinTree<Watcher>(memoryManager);
     }
 
 
@@ -36,18 +39,22 @@ public class BinTreeTest
 
 
     /**
-     * Test method for {@link BinTree#insert(HasCoordinate)}.
+     * Test method for {@link BinTree#insert(HasCoordinateAndHandle)}.
+     *
+     * @throws IOException
      */
     public void testInsert()
+        throws IOException
     {
-        Watcher watcher1 = new Watcher("watcher1", -135, 45);
-        Watcher watcher2 = new Watcher("watcher2", -45, 45);
-        Watcher watcher3 = new Watcher("watcher3", 45, 0);
-        Watcher watcher4 = new Watcher("watcher4", 135, -45);
+        Watcher watcher1 = new Watcher(null, "watcher1", -135, 45);
+        Watcher watcher2 = new Watcher(null, "watcher2", -45, 45);
+        Watcher watcher3 = new Watcher(null, "watcher3", 45, 0);
+        Watcher watcher4 = new Watcher(null, "watcher4", 135, -45);
+        // TO-DO
 
         tree.insert(watcher1);
 
-        assertEquals(watcher1, ((BinLeafNode<?>)tree.getRoot()).getElement());
+        assertEquals(watcher1, ((BinLeafNode)tree.getRoot()).getElement());
 
         tree.insert(watcher2);
 
@@ -57,34 +64,47 @@ public class BinTreeTest
         tree.insert(watcher4);
 
         assertEquals(
-            watcher1,
-            ((BinLeafNode<?>)((BinInternalNode)((BinInternalNode)((BinInternalNode)tree
-                .getRoot()).getLeft()).getRight()).getLeft()).getElement());
+            watcher1.getCoordinate(),
+            tree.handleToCoordinate(((BinLeafNode)tree
+                .handleToBinNode(((BinInternalNode)tree
+                    .handleToBinNode(((BinInternalNode)tree
+                        .handleToBinNode(((BinInternalNode)tree.getRoot())
+                            .getLeft())).getRight())).getLeft())).getElement()));
         assertEquals(
-            watcher2,
-            ((BinLeafNode<?>)((BinInternalNode)((BinInternalNode)((BinInternalNode)tree
-                .getRoot()).getLeft()).getRight()).getRight()).getElement());
+            watcher2.getCoordinate(),
+            tree.handleToCoordinate(((BinLeafNode)tree
+                .handleToBinNode(((BinInternalNode)tree
+                    .handleToBinNode(((BinInternalNode)tree
+                        .handleToBinNode(((BinInternalNode)tree.getRoot())
+                            .getLeft())).getRight())).getRight())).getElement()));
         assertEquals(
-            watcher3,
-            ((BinLeafNode<?>)((BinInternalNode)((BinInternalNode)tree.getRoot())
-                .getRight()).getRight()).getElement());
+            watcher3.getCoordinate(),
+            tree.handleToCoordinate(((BinLeafNode)tree
+                .handleToBinNode(((BinInternalNode)tree
+                    .handleToBinNode(((BinInternalNode)tree.getRoot())
+                        .getRight())).getRight())).getElement()));
         assertEquals(
-            watcher4,
-            ((BinLeafNode<?>)((BinInternalNode)((BinInternalNode)tree.getRoot())
-                .getRight()).getLeft()).getElement());
+            watcher4.getCoordinate(),
+            tree.handleToCoordinate(((BinLeafNode)tree
+                .handleToBinNode(((BinInternalNode)tree
+                    .handleToBinNode(((BinInternalNode)tree.getRoot())
+                        .getRight())).getLeft())).getElement()));
     }
 
 
     /**
-     * Test method for
-     * {@link BinTree#remove(Coordinate)}.
+     * Test method for {@link BinTree#remove(Coordinate)}.
+     *
+     * @throws IOException
      */
     public void testRemove()
+        throws IOException
     {
-        Watcher watcher1 = new Watcher("watcher1", -135, 45);
-        Watcher watcher2 = new Watcher("watcher2", -45, 45);
-        Watcher watcher3 = new Watcher("watcher3", 45, 0);
-        Watcher watcher4 = new Watcher("watcher4", 135, -45);
+        Watcher watcher1 = new Watcher(null, "watcher1", -135, 45);
+        Watcher watcher2 = new Watcher(null, "watcher2", -45, 45);
+        Watcher watcher3 = new Watcher(null, "watcher3", 45, 0);
+        Watcher watcher4 = new Watcher(null, "watcher4", 135, -45);
+        // TO-DO
 
         tree.insert(watcher1);
         tree.insert(watcher2);
@@ -112,21 +132,24 @@ public class BinTreeTest
 
 
     /**
-     * Test method for
-     * {@link BinTree#find(Coordinate)}.
+     * Test method for {@link BinTree#find(Coordinate)}.
+     *
+     * @throws IOException
      */
     public void testFind()
+        throws IOException
     {
-        Watcher watcher1 = new Watcher("watcher1", -90, -45);
+        Watcher watcher1 = new Watcher(null, "watcher1", -90, -45);
+        // TO-DO
 
         assertNull(tree.find(watcher1.getCoordinate()));
 
         tree.insert(watcher1);
         assertEquals(watcher1, tree.find(watcher1.getCoordinate()));
 
-        Watcher watcher2 = new Watcher("watcher2", -90, -50);
+        Watcher watcher2 = new Watcher(null, "watcher2", -90, -50);
         tree.insert(watcher2);
-        Watcher watcher3 = new Watcher("watcher3", 90, 45);
+        Watcher watcher3 = new Watcher(null, "watcher3", 90, 45);
         tree.insert(watcher3);
 
         assertEquals(watcher2, tree.find(watcher2.getCoordinate()));
@@ -134,10 +157,10 @@ public class BinTreeTest
 
         tree.clear();
 
-        Watcher watcherA = new Watcher("watcherA", -135, 45);
-        Watcher watcherB = new Watcher("watcherB", -45, 45);
-        Watcher watcherC = new Watcher("watcherC", 45, 0);
-        Watcher watcherD = new Watcher("watcherD", 135, -45);
+        Watcher watcherA = new Watcher(null, "watcherA", -135, 45);
+        Watcher watcherB = new Watcher(null, "watcherB", -45, 45);
+        Watcher watcherC = new Watcher(null, "watcherC", 45, 0);
+        Watcher watcherD = new Watcher(null, "watcherD", 135, -45);
 
         tree.insert(watcherA);
         tree.insert(watcherB);
@@ -154,13 +177,17 @@ public class BinTreeTest
     /**
      * Test method for
      * {@link BinTree#regionSearch(double, double, double, double)}.
+     *
+     * @throws IOException
      */
     public void testRegionSearch()
+        throws IOException
     {
-        Watcher watcher1 = new Watcher("watcher1", -135, 45);
-        Watcher watcher2 = new Watcher("watcher2", -45, 45);
-        Watcher watcher3 = new Watcher("watcher3", 45, 0);
-        Watcher watcher4 = new Watcher("watcher4", 135, -45);
+        Watcher watcher1 = new Watcher(null, "watcher1", -135, 45);
+        Watcher watcher2 = new Watcher(null, "watcher2", -45, 45);
+        Watcher watcher3 = new Watcher(null, "watcher3", 45, 0);
+        Watcher watcher4 = new Watcher(null, "watcher4", 135, -45);
+        // TO-DO
 
         tree.insert(watcher1);
         tree.insert(watcher2);
@@ -185,13 +212,17 @@ public class BinTreeTest
 
     /**
      * Test method for {@link BinTree#toString()}.
+     *
+     * @throws IOException
      */
     public void testToString()
+        throws IOException
     {
         assertEquals("E", tree.toString());
 
-        Watcher watcherA = new Watcher("watcherA", -135, 45);
-        Watcher watcherB = new Watcher("watcherB", -45, 45);
+        Watcher watcherA = new Watcher(null, "watcherA", -135, 45);
+        Watcher watcherB = new Watcher(null, "watcherB", -45, 45);
+        // TO-DO
 
         tree.insert(watcherA);
         tree.insert(watcherB);
@@ -204,19 +235,23 @@ public class BinTreeTest
 
     /**
      * Tests the organize method.
+     *
+     * @throws IOException
      */
     public void testOrganize()
+        throws IOException
     {
-        Watcher riley = new Watcher("Riley", -105.7, -24.3);
-        Watcher taylor = new Watcher("Taylor", 21.2, -38.6);
-        Watcher nevaeh = new Watcher("Nevaeh", -11.0, 63.1);
-        Watcher dominic = new Watcher("Dominic", -79.2, 37.3);
-        Watcher tristan = new Watcher("Tristan", -117.1, 5.0);
+        Watcher riley = new Watcher(null, "Riley", -105.7, -24.3);
+        Watcher taylor = new Watcher(null, "Taylor", 21.2, -38.6);
+        Watcher nevaeh = new Watcher(null, "Nevaeh", -11.0, 63.1);
+        Watcher dominic = new Watcher(null, "Dominic", -79.2, 37.3);
+        Watcher tristan = new Watcher(null, "Tristan", -117.1, 5.0);
         // del taylor
-        Watcher alexa = new Watcher("Alexa", -50.2, 88.4);
-        Watcher john = new Watcher("John", 10.7, -80.4);
-        Watcher penny = new Watcher("Penny", 55.3, -80.3);
+        Watcher alexa = new Watcher(null, "Alexa", -50.2, 88.4);
+        Watcher john = new Watcher(null, "John", 10.7, -80.4);
+        Watcher penny = new Watcher(null, "Penny", 55.3, -80.3);
         // del john
+        // TO-DO
 
         tree.insert(riley);
         tree.insert(taylor);

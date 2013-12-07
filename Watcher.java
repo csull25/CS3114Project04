@@ -1,4 +1,3 @@
-
 // -------------------------------------------------------------------------
 /**
  * This class represents a Watcher. A watcher has a name and a location. This
@@ -9,16 +8,24 @@
  * @version 2013.09.09
  * @version 2013.09.16 (commenting)
  * @version 2013.10.03 (updates)
- * @version 2013.12.04 (updated)
+ * @version 2013.12.07 (updated)
  */
 
 public class Watcher
-    implements HasCoordinate
+    implements HasCoordinateAndHandle
 {
+
+    /**
+     * The Handle of the watcher
+     */
+    private Handle     handle;
     /**
      * The name of the watcher
      */
     private String     name;
+    /**
+     * The Coordinate of the watcher
+     */
     private Coordinate coordinate;
 
 
@@ -26,6 +33,8 @@ public class Watcher
     /**
      * Create a new Watcher object.
      *
+     * @param handle
+     *            (the Handle of the Watcher)
      * @param name
      *            (the name of the Watcher)
      * @param longitude
@@ -33,10 +42,22 @@ public class Watcher
      * @param latitude
      *            (the latitude coordinate)
      */
-    public Watcher(String name, double longitude, double latitude)
+    public Watcher(
+        Handle handle,
+        String name,
+        double longitude,
+        double latitude)
     {
+        this.handle = handle;
         this.name = name;
         this.coordinate = new Coordinate(longitude, latitude);
+    }
+
+    /**
+     * @return the handle
+     */
+    public Handle getHandle() {
+        return handle;
     }
 
 

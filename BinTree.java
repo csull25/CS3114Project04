@@ -12,7 +12,7 @@ import java.io.IOException;
  *            a generic object that implements the HasCoordinate interface
  */
 
-public class BinTree<T extends HasCoordinate>
+public class BinTree<T extends HasCoordinateAndHandle>
 {
     private BinNode       root;
     private BinLeafNode   emptyLeafNode;
@@ -73,13 +73,13 @@ public class BinTree<T extends HasCoordinate>
      *            the new element to be added
      * @throws IOException
      */
-    public void insert(Handle element)
+    public void insert(T element)
         throws IOException
     {
         // make the new element the root if the root is null
         if (root == null)
         {
-            root = new BinLeafNode(null, element);
+            root = new BinLeafNode(null, element.getHandle());
             // TO-DO
         }
         else
@@ -106,10 +106,10 @@ public class BinTree<T extends HasCoordinate>
                 root = newRoot;
             }
             // call the recursive method
-            if (handleToCoordinate(element).getLongitude() < 0.0)
+            if (handleToCoordinate(element.getHandle()).getLongitude() < 0.0)
             {
                 insert(
-                    element,
+                    element.getHandle(),
                     handleToBinNode(((BinInternalNode)root).getLeft()),
                     (BinInternalNode)root,
                     1,
@@ -122,7 +122,7 @@ public class BinTree<T extends HasCoordinate>
             else
             {
                 insert(
-                    element,
+                    element.getHandle(),
                     handleToBinNode(((BinInternalNode)root).getRight()),
                     (BinInternalNode)root,
                     1,
@@ -1338,14 +1338,31 @@ public class BinTree<T extends HasCoordinate>
     }
 
 
-    private BinNode handleToBinNode(Handle h)
+    /**
+     * Gets the BinNode that corresponds to the given handle
+     *
+     * @param h
+     *            the Handle of the BinNode
+     * @return a BinNode that is represented by h
+     * @throws IOException
+     */
+    public BinNode handleToBinNode(Handle h)
         throws IOException
     {
         return deserializeBinNode(h, memoryManager.read(h));
     }
 
 
-    private Coordinate handleToCoordinate(Handle h)
+    /**
+     * Gets the Coordinate of the HsCoordinate that corresponds to the given
+     * handle.
+     *
+     * @param h
+     *            the Handle of the HasCoordinate object
+     * @return the Coordinate of the HasCoordinate that is represented by h
+     * @throws IOException
+     */
+    public Coordinate handleToCoordinate(Handle h)
         throws IOException
     {
         return deserializeCoordinate(memoryManager.read(h));

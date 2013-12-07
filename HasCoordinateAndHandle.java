@@ -8,8 +8,16 @@
  * @version 2013.12.04 (updated)
  */
 
-public interface HasCoordinate
+public interface HasCoordinateAndHandle
 {
+
+    /**
+     * Gets the Handle of the object
+     *
+     * @return the handle
+     */
+    public Handle getHandle();
+
     /**
      * Gets the coordinate of the object.
      *
