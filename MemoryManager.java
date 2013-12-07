@@ -122,6 +122,36 @@ public class MemoryManager {
 
     // ----------------------------------------------------------
     /**
+     * Remove data from memory file by adding it to free_block queue
+     * @param h handle of data to be removed
+     * @throws IOException
+     */
+    public void remove(Handle h) throws IOException {
+        int size = bytesToShort(pool.getData(h.getPosition(), SIZE_BYTES));
+        int pos = h.getPosition();
+
+        // size of free block queue makes area of insertion meaningless
+        if (free_blocks.getLength() < 2) {
+            free_blocks.inqueue(new FreeBlock(pos, size));
+            return;
+        }
+
+        // insert free block into correct queue location
+        FreeBlock b;
+        while (true) {
+            b = free_blocks.dequeue();
+            if ((free_blocks.peek().getPosition() > pos)
+                && (b.getPosition() < pos)) {
+                free_blocks.inqueue(b);
+                free_blocks.inqueue(new FreeBlock(pos, size));
+                return;
+            }
+        }
+
+    }
+
+    // ----------------------------------------------------------
+    /**
      * Return short value of first 2 positions of byte array
      * @param b byte array
      * @return short value of b[0] and b[1]

@@ -67,39 +67,6 @@ public class BufferPoolTest
 
 
     /**
-     * Test method for {@link BufferPool#getKey(int)}.
-     *
-     * @throws IOException
-     */
-    public void testGetKey()
-        throws IOException
-    {
-        assertEquals((32 << 8) + 77, pool.getKey(0));
-        pool.closeFile();
-        file.close();
-    }
-
-
-    /**
-     * Test method for {@link BufferPool#swap(int, int)}.
-     *
-     * @throws IOException
-     */
-    public void testSwap()
-        throws IOException
-    {
-        pool.swap(0, 1);
-        assertEquals((32 << 8) + 77, pool.getKey(1));
-        pool.flushBuffers();
-        pool.closeFile();
-        file.close();
-        file = new RandomAccessFile("Test100_2.dat", "r");
-        assertEquals((32 << 8) + 69, file.readShort());
-        assertEquals(409600, file.length());
-    }
-
-
-    /**
      * Tests the get methods.
      *
      * @throws IOException
