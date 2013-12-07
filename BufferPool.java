@@ -13,17 +13,10 @@ import java.io.RandomAccessFile;
 public class BufferPool
 {
     /**
-     * Size of a block: 4096 bytes
+     * Size of a block
      */
-    public int           BLOCK_SIZE; //       = 4096;
-    /**
-     * Size of a record: 4 bytes
-     */
-    public final int           SIZE_OF_RECORD    = 4;
-    /**
-     * Number of records per block: 1024 records
-     */
-    public int           RECORDS_PER_BLOCK; //= 1024;
+    private int           BLOCK_SIZE;
+    private int           FILE_SIZE;
     private LinkedList<Buffer> pool;
     private RandomAccessFile   file;
     private byte[]             tempArray;
@@ -46,7 +39,6 @@ public class BufferPool
         throws IOException
     {
         BLOCK_SIZE = 4096;
-        RECORDS_PER_BLOCK = 1024;
         // create linked list of buffers, open file, create pointer tempArray
         this.pool = new LinkedList<Buffer>();
         this.file = new RandomAccessFile(fileName, "rw");
@@ -82,6 +74,7 @@ public class BufferPool
         throws IOException
     {
         BLOCK_SIZE = bufferSize;
+        FILE_SIZE = bufferSize;
 
         // create linked list of buffers, open file, create pointer tempArray
         this.pool = new LinkedList<Buffer>();
@@ -275,6 +268,18 @@ public class BufferPool
         }
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Add enough 0 bytes for a new block at end of file
+     * @throws IOException
+     */
+    public void expandFile() throws IOException {
+        file.seek(FILE_SIZE);
+        for (int i = 0; i < BLOCK_SIZE; i++) {
+            file.write(0);
+        }
+    }
+
 
     /**
      * Closes the file.
@@ -287,116 +292,4 @@ public class BufferPool
         this.file.close();
     }
 
-
-    /**
-     * Compares the keys at the given index.
-     *
-     * @param index1
-     *            the first index
-     * @param index2
-     *            the second index
-     * @return a negative number if the first key is smaller, a positive number
-     *         if the first key is larger, and zero if the keys are identical
-     * @throws IOException
-     *
-                 public int compareKeys(int index1, int index2) throws
-     *             IOException { int[] key1 = new int[2]; int[] key2 = new
-     *             int[2]; tempArray = getBuffer(index1 /
-     *             RECORDS_PER_BLOCK).readBlock(); key1[0] = tempArray[(index1 *
-     *             SIZE_OF_RECORD) % BLOCK_SIZE] & 0xFF; key1[1] =
-     *             tempArray[(index1 * SIZE_OF_RECORD) % BLOCK_SIZE + 1] & 0xFF;
-     *             tempArray = getBuffer(index2 /
-     *             RECORDS_PER_BLOCK).readBlock(); key2[0] = tempArray[(index2 *
-     *             SIZE_OF_RECORD) % BLOCK_SIZE] & 0xFF; key2[1] =
-     *             tempArray[(index2 * SIZE_OF_RECORD) % BLOCK_SIZE + 1] & 0xFF;
-     *             if (key1[0] == key2[0]) { return (short)(key1[1] - key2[1]);
-     *             } else { return (short)(key1[0] - key2[0]); } }
-     */
-
-    /**
-     * Gets the key of the record at the given index.
-     *
-     * @param index
-     *            the index
-     * @return the key
-     * @throws IOException
-     */
-    public int getKey(int index)
-        throws IOException
-    {
-        byte[] key = new byte[2];
-        tempArray = getBuffer(index / RECORDS_PER_BLOCK).readBlock();
-        key[0] = tempArray[(index * SIZE_OF_RECORD) % BLOCK_SIZE];
-        key[1] = tempArray[(index * SIZE_OF_RECORD) % BLOCK_SIZE + 1];
-        return (key[0] << 8) | key[1] & 0xFF;
-    }
-
-
-    /**
-     * Swaps the records at the given indices.
-     *
-     * @param index1
-     *            index of first record
-     * @param index2
-     *            index of second record
-     * @throws IOException
-     */
-    public void swap(int index1, int index2)
-        throws IOException
-    {
-        // if the indices are in different blocks (sectors)
-        if (index1 / RECORDS_PER_BLOCK != index2 / RECORDS_PER_BLOCK)
-        {
-            // get the record based on the first index
-            Buffer buffer = getBuffer(index1 / RECORDS_PER_BLOCK);
-            tempArray = buffer.readBlock();
-            byte[] temp1 = new byte[4];
-            for (int i = 0; i < 4; i++)
-            {
-                temp1[i] =
-                    tempArray[(index1 * SIZE_OF_RECORD) % BLOCK_SIZE + i];
-            }
-
-            // get the record for the second index, followed by writing the
-            // record based on the first index
-            buffer = getBuffer(index2 / RECORDS_PER_BLOCK);
-            tempArray = buffer.readBlock();
-            byte[] temp2 = new byte[4];
-            for (int i = 0; i < 4; i++)
-            {
-                temp2[i] =
-                    tempArray[(index2 * SIZE_OF_RECORD) % BLOCK_SIZE + i];
-                tempArray[(index2 * SIZE_OF_RECORD) % BLOCK_SIZE + i] =
-                    temp1[i];
-            }
-            buffer.markDirty();
-
-            // write the record based on the second index
-            buffer = getBuffer(index1 / RECORDS_PER_BLOCK);
-            tempArray = buffer.readBlock();
-            for (int i = 0; i < 4; i++)
-            {
-                tempArray[(index1 * SIZE_OF_RECORD) % BLOCK_SIZE + i] =
-                    temp2[i];
-            }
-            buffer.markDirty();
-        }
-
-        // index1 and index2 are in the same block (sector)
-        else
-        {
-            // standard swap within the same buffer
-            Buffer buffer = getBuffer(index1 / RECORDS_PER_BLOCK);
-            tempArray = buffer.readBlock();
-            byte temp;
-            for (int i = 0; i < 4; i++)
-            {
-                temp = tempArray[(index1 * SIZE_OF_RECORD) % BLOCK_SIZE + i];
-                tempArray[(index1 * SIZE_OF_RECORD) % BLOCK_SIZE + i] =
-                    tempArray[(index2 * SIZE_OF_RECORD) % BLOCK_SIZE + i];
-                tempArray[(index2 * SIZE_OF_RECORD) % BLOCK_SIZE + i] = temp;
-            }
-            buffer.markDirty();
-        }
-    }
 }
