@@ -42,11 +42,11 @@ public class MemoryManager {
      * @return Handle that points to written data
      * @throws IOException
      */
-    public Handle write(byte[] b) throws IOException {
+    public int write(byte[] b) throws IOException {
         // start at next_pos and find spot big enough
         int pos = findSpace(b.length);
         write(b, pos);
-        return new Handle(pos);
+        return pos;
     }
 
     // ----------------------------------------------------------
@@ -112,12 +112,12 @@ public class MemoryManager {
      * @return bytes for handle
      * @throws IOException
      */
-    public byte[] read(Handle h) throws IOException {
+    public byte[] read(int h) throws IOException {
         // get size of data
-        byte[] size_bytes = pool.getData(h.getPosition(), SIZE_BYTES);
+        byte[] size_bytes = pool.getData(h, SIZE_BYTES);
 
         // get handle's data and return bytes
-        return pool.getData(h.getPosition(), bytesToShort(size_bytes));
+        return pool.getData(h, bytesToShort(size_bytes));
     }
 
     // ----------------------------------------------------------
@@ -126,13 +126,12 @@ public class MemoryManager {
      * @param h handle of data to be removed
      * @throws IOException
      */
-    public void remove(Handle h) throws IOException {
-        int size = bytesToShort(pool.getData(h.getPosition(), SIZE_BYTES));
-        int pos = h.getPosition();
+    public void remove(int h) throws IOException {
+        int size = bytesToShort(pool.getData(h, SIZE_BYTES));
 
         // size of free block queue makes area of insertion meaningless
         if (free_blocks.getLength() < 2) {
-            free_blocks.inqueue(new FreeBlock(pos, size));
+            free_blocks.inqueue(new FreeBlock(h, size));
             return;
         }
 
@@ -140,14 +139,13 @@ public class MemoryManager {
         FreeBlock b;
         while (true) {
             b = free_blocks.dequeue();
-            if ((free_blocks.peek().getPosition() > pos)
-                && (b.getPosition() < pos)) {
+            if ((free_blocks.peek().getPosition() > h)
+                && (b.getPosition() < h)) {
                 free_blocks.inqueue(b);
-                free_blocks.inqueue(new FreeBlock(pos, size));
+                free_blocks.inqueue(new FreeBlock(h, size));
                 return;
             }
         }
-
     }
 
     // ----------------------------------------------------------
@@ -160,6 +158,4 @@ public class MemoryManager {
         ByteBuffer bytes = ByteBuffer.wrap(b);
         return bytes.getShort();
     }
-
-
 }
