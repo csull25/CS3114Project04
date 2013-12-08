@@ -20,7 +20,7 @@ public class BinLeafNodeTest
     protected void setUp()
         throws Exception
     {
-        node = new BinLeafNode(new Handle(1), new Handle(47));
+        node = new BinLeafNode(1, 47);
     }
 
     /**
@@ -28,7 +28,7 @@ public class BinLeafNodeTest
      */
     public void testGetMyHandle()
     {
-        assertEquals(1, node.getMyHandle().getPosition());
+        assertEquals(1, node.getMyHandle());
     }
 
     /**
@@ -36,7 +36,7 @@ public class BinLeafNodeTest
      */
     public void testGetElement()
     {
-        assertEquals(47, node.getElement().getPosition());
+        assertEquals(47, node.getElement());
     }
 
 

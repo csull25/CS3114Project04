@@ -12,8 +12,8 @@ public class BinLeafNode
     implements BinNode
 {
 
-    private Handle myHandle;
-    private Handle element;
+    private int myHandle;
+    private int element;
 
 
     // ----------------------------------------------------------
@@ -25,7 +25,7 @@ public class BinLeafNode
      * @param element
      *            the element stored in the BinLeafNode
      */
-    public BinLeafNode(Handle myHandle, Handle element)
+    public BinLeafNode(int myHandle, int element)
     {
         this.myHandle = myHandle;
         this.element = element;
@@ -37,7 +37,7 @@ public class BinLeafNode
      *
      * @return the myHandle field
      */
-    public Handle getMyHandle()
+    public int getMyHandle()
     {
         return this.myHandle;
     }
@@ -48,7 +48,7 @@ public class BinLeafNode
      *
      * @return the element field
      */
-    public Handle getElement()
+    public int getElement()
     {
         return this.element;
     }
@@ -79,7 +79,7 @@ public class BinLeafNode
         for (int i = 0; i < byteArray.length; i++)
         {
             byteArray[i + 1] =
-                (byte)((element.getPosition() >> (24 - 8 * i)) & 0xFF);
+                (byte)((element >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }

@@ -19,7 +19,7 @@ public class BinInternalNodeTest
     protected void setUp()
         throws Exception
     {
-        node = new BinInternalNode(new Handle(5));
+        node = new BinInternalNode(5);
     }
 
 
@@ -28,7 +28,7 @@ public class BinInternalNodeTest
      */
     public void testMyHandle()
     {
-        assertEquals(5, node.getMyHandle().getPosition());
+        assertEquals(5, node.getMyHandle());
     }
 
     /**
@@ -54,9 +54,8 @@ public class BinInternalNodeTest
      */
     public void testSetLeft()
     {
-        Handle h = new Handle(13);
-        node.setLeft(new BinLeafNode(h, new Handle(6)));
-        assertEquals(h, node.getLeft());
+        node.setLeft(new BinLeafNode(13, 6));
+        assertEquals(13, node.getLeft());
     }
 
 
@@ -65,9 +64,8 @@ public class BinInternalNodeTest
      */
     public void testSetRight()
     {
-        Handle h = new Handle(31);
-        node.setRight(new BinLeafNode(h, new Handle(7)));
-        assertEquals(h, node.getRight());
+        node.setRight(new BinLeafNode(31,7));
+        assertEquals(31, node.getRight());
     }
 
 

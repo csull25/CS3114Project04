@@ -11,9 +11,9 @@ public class BinInternalNode
     implements BinNode
 {
 
-    private Handle myHandle;
-    private Handle left;
-    private Handle right;
+    private int myHandle;
+    private int left;
+    private int right;
 
 
     // ----------------------------------------------------------
@@ -23,10 +23,10 @@ public class BinInternalNode
      * @param myHandle
      *            the handle to this node
      */
-    public BinInternalNode(Handle myHandle)
+    public BinInternalNode(int myHandle)
     {
         this.myHandle = myHandle;
-        left = right = null;
+        left = right = -1;
     }
 
 
@@ -40,7 +40,7 @@ public class BinInternalNode
      * @param right
      *            the right Handle
      */
-    public BinInternalNode(Handle myHandle, Handle left, Handle right)
+    public BinInternalNode(int myHandle, int left, int right)
     {
         this.myHandle = myHandle;
         this.left = left;
@@ -52,7 +52,7 @@ public class BinInternalNode
      *
      * @return the myHandle field
      */
-    public Handle getMyHandle() {
+    public int getMyHandle() {
         return this.myHandle;
     }
 
@@ -62,7 +62,7 @@ public class BinInternalNode
      *
      * @return the left field
      */
-    public Handle getLeft()
+    public int getLeft()
     {
         return this.left;
     }
@@ -73,7 +73,7 @@ public class BinInternalNode
      *
      * @return the right field
      */
-    public Handle getRight()
+    public int getRight()
     {
         return this.right;
     }
@@ -128,9 +128,9 @@ public class BinInternalNode
         for (int i = 0; i < 4; i++)
         {
             byteArray[i + 1] =
-                (byte)((left.getPosition() >> (24 - 8 * i)) & 0xFF);
+                (byte)((left >> (24 - 8 * i)) & 0xFF);
             byteArray[i + 5] =
-                (byte)((right.getPosition() >> (24 - 8 * i)) & 0xFF);
+                (byte)((right >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }

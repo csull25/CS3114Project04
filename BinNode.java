@@ -21,7 +21,7 @@ public interface BinNode
      *
      * @return the myHandle field
      */
-    public Handle getMyHandle();
+    public int getMyHandle();
 
 
     /**

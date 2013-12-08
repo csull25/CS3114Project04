@@ -1287,7 +1287,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
      *            the byteArray representation to be converted
      * @return the BinNode that was represented by the given byte array
      */
-    private BinNode deserializeBinNode(Handle myHandle, byte[] byteArray)
+    private BinNode deserializeBinNode(int myHandle, byte[] byteArray)
     {
         if (byteArray[2] == 1)
         {
@@ -1296,7 +1296,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
             {
                 handle += byteArray[i + 3] << (24 - 8 * i);
             }
-            return new BinLeafNode(myHandle, new Handle(handle));
+            return new BinLeafNode(myHandle, handle);
             // TO-DO
         }
         else
@@ -1309,8 +1309,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
             }
             return new BinInternalNode(
                 myHandle,
-                new Handle(handle1),
-                new Handle(handle2));
+                handle1,
+                handle2);
             // TO-DO
         }
     }
@@ -1346,7 +1346,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
      * @return a BinNode that is represented by h
      * @throws IOException
      */
-    public BinNode handleToBinNode(Handle h)
+    public BinNode handleToBinNode(int h)
         throws IOException
     {
         return deserializeBinNode(h, memoryManager.read(h));
@@ -1362,7 +1362,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
      * @return the Coordinate of the HasCoordinate that is represented by h
      * @throws IOException
      */
-    public Coordinate handleToCoordinate(Handle h)
+    public Coordinate handleToCoordinate(int h)
         throws IOException
     {
         return deserializeCoordinate(memoryManager.read(h));
