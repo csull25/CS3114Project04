@@ -15,8 +15,8 @@ public class BufferPool
     /**
      * Size of a block
      */
-    private int           BLOCK_SIZE;
-    private int           FILE_SIZE;
+    private int                BLOCK_SIZE;
+    private int                FILE_SIZE;
     private LinkedList<Buffer> pool;
     private RandomAccessFile   file;
     private byte[]             tempArray;
@@ -81,7 +81,8 @@ public class BufferPool
         this.file = new RandomAccessFile(fileName, "rw");
         this.tempArray = new byte[BLOCK_SIZE];
 
-        for (int i = 0; i < BLOCK_SIZE; i++) {
+        for (int i = 0; i < BLOCK_SIZE; i++)
+        {
             file.write(0);
         }
         file.seek(0);
@@ -204,48 +205,66 @@ public class BufferPool
         return buffer;
     }
 
+
     // ----------------------------------------------------------
     /**
      * Place a description of your method here.
+     *
      * @param pos
      * @return
      * @throws IOException
      */
-    private Buffer getBufferByPosition(int pos) throws IOException {
+    private Buffer getBufferByPosition(int pos)
+        throws IOException
+    {
         return getBuffer(pos / BLOCK_SIZE);
     }
+
 
     // ----------------------------------------------------------
     /**
      * Get array of bytes from file
-     * @param pos position to start
-     * @param size number of bytes to get
+     *
+     * @param pos
+     *            position to start
+     * @param size
+     *            number of bytes to get
      * @return array of bytes
      * @throws IOException
      */
-    public byte[] getData(int pos, int size) throws IOException {
+    public byte[] getData(int pos, int size)
+        throws IOException
+    {
         // data may need to be retrieved from multiple buffers
         byte[] b = new byte[size];
         Buffer buf;
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < size; i++)
+        {
             buf = getBufferByPosition(pos + i);
             b[i] = buf.getByte(pos + i);
-//            System.out.println("byte " + i +": "+ b[i]);
+// System.out.println("byte " + i +": "+ b[i]);
         }
         return b;
     }
 
+
     // ----------------------------------------------------------
     /**
      * Write data to buffer(s)
-     * @param b byte array to write
-     * @param pos position to begin writing
+     *
+     * @param b
+     *            byte array to write
+     * @param pos
+     *            position to begin writing
      * @throws IOException
      */
-    public void writeData(byte[] b, int pos) throws IOException {
+    public void writeData(byte[] b, int pos)
+        throws IOException
+    {
         Buffer buf;
-        for (int i = 0; i < b.length; i++) {
-//            System.out.println("byte " + i +": "+ b[i]);
+        for (int i = 0; i < b.length; i++)
+        {
+// System.out.println("byte " + i +": "+ b[i]);
             buf = getBufferByPosition(pos + i);
             buf.setByte(b[i], pos + i);
         }
@@ -274,37 +293,54 @@ public class BufferPool
         }
     }
 
+
     // ----------------------------------------------------------
     /**
      * Add enough 0 bytes for a new block at end of file
+     *
      * @throws IOException
      */
-    public void expandFile() throws IOException {
+    public void expandFile()
+        throws IOException
+    {
         file.seek(FILE_SIZE);
-        for (int i = 0; i < BLOCK_SIZE; i++) {
+        for (int i = 0; i < BLOCK_SIZE; i++)
+        {
             file.write(0);
         }
         FILE_SIZE += BLOCK_SIZE;
     }
 
+
     // ----------------------------------------------------------
     /**
      * Expand file and add extra size to free block at end of the file
-     * @param blocks queue of blocks
+     *
+     * @param blocks
+     *            queue of blocks
      * @throws IOException
      */
-    public void expandFile(LinkedQueue<FreeBlock> blocks) throws IOException {
+    public void expandFile(LinkedQueue<FreeBlock> blocks)
+        throws IOException
+    {
         FreeBlock first = blocks.peek();
         FreeBlock block;
-        do {
-            block = blocks.peek();
-            if (block.getSize() + block.getPosition() == FILE_SIZE ) {
-                // last free block was at end of file and has been expanded
-                block.setSize(block.getSize() + BLOCK_SIZE);
-                break; // jump to file expansion
+        if (first != null)
+        {
+            do
+            {
+                block = blocks.peek();
+                System.out.println(block);
+                if (block.getSize() + block.getPosition() == FILE_SIZE)
+                {
+                    // last free block was at end of file and has been expanded
+                    block.setSize(block.getSize() + BLOCK_SIZE);
+                    break; // jump to file expansion
+                }
+                blocks.inqueue(blocks.dequeue());
             }
-            blocks.inqueue(blocks.dequeue());
-        } while (blocks.peek() != first);
+            while (blocks.peek() != first);
+        }
         expandFile();
     }
 
