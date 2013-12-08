@@ -116,23 +116,65 @@ public class MemoryManager {
      * @throws IOException
      */
     public void remove(int h) throws IOException {
+        FreeBlock b;
+        FreeBlock p;
         int size = bytesToShort(pool.getData(h, SIZE_BYTES));
 
         // size of free block queue makes area of insertion meaningless
-        if (free_blocks.getLength() < 2) {
+        if (free_blocks.getLength() == 0) {
+            free_blocks.inqueue(new FreeBlock(h, size));
+            return;
+        }
+        else if (free_blocks.getLength() == 1) {
+            // check to see if blocks should be merged
+            p = free_blocks.peek();
+            if (p.getPosition() + p.getSize() + 1 == h) {
+                // merge with previous block that is also free
+                p.setSize(p.getSize() + size);
+            }
+            else if (h + size + 1 == p.getPosition()) {
+                // merge with next block that is also free
+                p.setSize(p.getSize() + size);
+                p.setPosition(p.getPosition() - size);
+            }
+
             free_blocks.inqueue(new FreeBlock(h, size));
             return;
         }
 
         // insert free block into correct queue location
-        FreeBlock b;
+
         while (true) {
             b = free_blocks.dequeue();
-            if ((free_blocks.peek().getPosition() > h)
+            p = free_blocks.peek();
+            free_blocks.inqueue(b);
+            if ((p.getPosition() > h)
                 && (b.getPosition() < h)) {
-                free_blocks.inqueue(b);
-                free_blocks.inqueue(new FreeBlock(h, size));
-                return;
+                // previous empty block is adjacent to newly freed
+                boolean merged = false;
+                if (b.getPosition() + b.getSize() + 1 == h) {
+                    // previous block should be merged with new
+                    merged = true;
+                    b.setSize(b.getSize() + size);
+                }
+                if (h + size + 1 == p.getPosition()) {
+                    // next block should be merged with new
+                    merged = true;
+                    p.setSize(p.getSize() + size);
+                    p.setPosition(p.getPosition() - size);
+                }
+                if (merged) {
+                    // check to see if freed block was between two free blocks
+                    if (b.getPosition() + b.getSize() + 1 == p.getPosition()) {
+                        b.setSize(b.getSize() + p.getSize());
+                        free_blocks.dequeue(); // get rid of merged block ref
+                    }
+                    return;
+                }
+                else {
+                    free_blocks.inqueue(new FreeBlock(h, size));
+                    return;
+                }
             }
         }
     }
