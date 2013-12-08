@@ -31,6 +31,7 @@ public class BinInternalNodeTest
         assertEquals(5, node.getMyHandle());
     }
 
+
     /**
      * Test method for {@link BinInternalNode#setMyHandle(int)}.
      */
@@ -39,6 +40,7 @@ public class BinInternalNodeTest
         node.setMyHandle(55);
         assertEquals(55, node.getMyHandle());
     }
+
 
     /**
      * Test method for {@link BinInternalNode#getLeft()}.
@@ -73,7 +75,7 @@ public class BinInternalNodeTest
      */
     public void testSetRight()
     {
-        node.setRight(new BinLeafNode(31,7));
+        node.setRight(new BinLeafNode(31, 7));
         assertEquals(31, node.getRight());
     }
 
@@ -84,6 +86,26 @@ public class BinInternalNodeTest
     public void testIsLeafNode()
     {
         assertFalse(node.isLeafNode());
+    }
+
+
+    /**
+     * Test method for {@link BinInternalNode#serialize()}.
+     */
+    public void testSerialize()
+    {
+        node.setLeft(new BinLeafNode(23, 37));
+        node.setRight(new BinLeafNode(9, 16));
+        byte[] expected = new byte[11]; // sets values to 0 as default
+        expected[1] = 11;
+        expected[6] = 23;
+        expected[10] = 9;
+        byte[] actual = node.serialize();
+        assertEquals(expected.length, actual.length);
+        for (int i = 0; i < expected.length; i++)
+        {
+            assertEquals(expected[i], actual[i]);
+        }
     }
 
 }

@@ -100,11 +100,13 @@ public class BinLeafNode
      */
     public byte[] serialize()
     {
-        byte[] byteArray = new byte[5];
+        byte[] byteArray = new byte[7];
         byteArray[0] = 0;
-        for (int i = 0; i < byteArray.length; i++)
+        byteArray[1] = 7;
+        byteArray[2] = 1;
+        for (int i = 0; i < 4; i++)
         {
-            byteArray[i + 1] = (byte)((element >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 3] = (byte)((element >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }

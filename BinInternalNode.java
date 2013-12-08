@@ -138,14 +138,16 @@ public class BinInternalNode
      */
     public byte[] serialize()
     {
-        // bytes 0,1 are size, 2-5 are left handle, 6-9 are right handle
-        byte[] byteArray = new byte[10];
+        // bytes 0,1 are size, 2 is leafNode indicator,
+        // 2-5 are left handle, 6-9 are right handle
+        byte[] byteArray = new byte[11];
         byteArray[0] = 0;
-        byteArray[1] = 10;
+        byteArray[1] = 11;
+        byteArray[2] = 0;
         for (int i = 0; i < 4; i++)
         {
-            byteArray[i + 2] = (byte)((left >> (24 - 8 * i)) & 0xFF);
-            byteArray[i + 6] = (byte)((right >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 3] = (byte)((left >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 7] = (byte)((right >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }

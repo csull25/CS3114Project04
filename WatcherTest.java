@@ -37,6 +37,7 @@ public class WatcherTest
         assertEquals(32, watcher.getHandle());
     }
 
+
     /**
      * Test method for {@link Watcher#setHandle(int)}.
      */
@@ -45,6 +46,7 @@ public class WatcherTest
         watcher.setHandle(2);
         assertEquals(2, watcher.getHandle());
     }
+
 
     /**
      * Test method for {@link Watcher#getName()}.
@@ -101,6 +103,28 @@ public class WatcherTest
     public void testToString()
     {
         assertEquals("tester 0.0 1.0", watcher.toString());
+    }
+
+
+    /**
+     * Test method for {@link Watcher#serialize()}.
+     */
+    public void testSerialize()
+    {
+        byte[] expected = new byte[24];
+        expected[1] = 24;
+        expected[10] = (byte)0x3f;
+        expected[11] = (byte)0xf0;
+        for (int i = 0; i < 6; i++)
+        {
+            expected[i + 18] = (byte)watcher.getName().charAt(i);
+        }
+        byte[] actual = watcher.serialize();
+        assertEquals(expected.length, actual.length);
+        for (int i = 0; i < expected.length; i++)
+        {
+            assertEquals(expected[i], actual[i]);
+        }
     }
 
 }

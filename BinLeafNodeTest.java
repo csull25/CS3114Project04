@@ -23,6 +23,7 @@ public class BinLeafNodeTest
         node = new BinLeafNode(1, 47);
     }
 
+
     /**
      * Test method for {@link BinLeafNode#getMyHandle()}.
      */
@@ -30,6 +31,7 @@ public class BinLeafNodeTest
     {
         assertEquals(1, node.getMyHandle());
     }
+
 
     /**
      * Test method for {@link BinLeafNode#setMyHandle(int)}.
@@ -39,6 +41,7 @@ public class BinLeafNodeTest
         node.setMyHandle(11);
         assertEquals(11, node.getMyHandle());
     }
+
 
     /**
      * Test method for {@link BinLeafNode#getElement()}.
@@ -55,6 +58,25 @@ public class BinLeafNodeTest
     public void testIsLeafNode()
     {
         assertTrue(node.isLeafNode());
+    }
+
+
+    /**
+     * Test method for {@link BinLeafNode#serialize()}.
+     */
+    public void testSerialize()
+    {
+        byte[] expected = new byte[7]; // sets values to 0 as default
+        expected[1] = 7;
+        expected[2] = 1;
+        expected[6] = 47;
+        byte[] actual = node.serialize();
+        assertEquals(expected.length, actual.length);
+        for (int i = 0; i < expected.length; i++)
+        {
+            assertEquals(expected[i], actual[i]);
+        }
+
     }
 
 }
