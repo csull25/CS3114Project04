@@ -1,6 +1,6 @@
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.io.IOException;
-
 
 // -------------------------------------------------------------------------
 /**
@@ -29,6 +29,9 @@ public class MemoryManager {
      * @throws IOException
      */
     public MemoryManager(int buffers, int buffer_size) throws IOException {
+        // get rid of old file
+        new File(FILENAME).delete();
+
         pool = new BufferPool(FILENAME, buffers, buffer_size);
         free_blocks = new LinkedQueue<FreeBlock>();
         free_blocks.inqueue(new FreeBlock(0, buffer_size));
@@ -57,7 +60,7 @@ public class MemoryManager {
      * @throws IOException
      */
     public void write(byte[] b, int h) throws IOException {
-        write(b, h);
+        pool.writeData(b, h);
     }
 
     // ----------------------------------------------------------
@@ -69,9 +72,17 @@ public class MemoryManager {
      */
     private int findSpace(int size) throws IOException {
         FreeBlock block;
+//        System.out.println("free blocks: " + free_blocks.getLength());
+        if (free_blocks.getLength() == 0) {
+//            System.out.println("no empty blocks");
+            pool.expandFile(free_blocks);
+            return findSpace(size);
+        }
+
+        next_pos = free_blocks.peek();
         do {
             block = free_blocks.dequeue();
-            if (block.getSize() < size) {
+            if (block.getSize() > size) {
                 // start writing - enough data
                 if (block.getSize() == size) {
                     // free block will be completely filled
@@ -86,10 +97,12 @@ public class MemoryManager {
             }
             else {
                 // jump this data and go to next
+//                System.out.println("size: " + block.getSize() + "\nsize needed: " + size);
                 free_blocks.inqueue(block);
             }
         } while (next_pos != free_blocks.peek());
         // no room so add more to file size
+//        System.out.println("empty blocks are too small, expand file");
         pool.expandFile(free_blocks);
         return findSpace(size);
     }
@@ -105,8 +118,21 @@ public class MemoryManager {
         // get size of data
         byte[] size_bytes = pool.getData(h, SIZE_BYTES);
 
+//        System.out.println(h + " size to get: " + bytesToShort(size_bytes));
         // get handle's data and return bytes
         return pool.getData(h, bytesToShort(size_bytes));
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Returns arbitrary number of bytes for handle
+     * @param h handle for retrieval
+     * @param size number of bytes to retrieve
+     * @return bytes for handle
+     * @throws IOException
+     */
+    public byte[] read(int h, int size) throws IOException {
+        return pool.getData(h, size);
     }
 
     // ----------------------------------------------------------
@@ -188,5 +214,14 @@ public class MemoryManager {
     private short bytesToShort(byte[] b) {
         ByteBuffer bytes = ByteBuffer.wrap(b);
         return bytes.getShort();
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Close the storage file
+     * @throws IOException
+     */
+    public void closeFile() throws IOException {
+        pool.closeFile();
     }
 }

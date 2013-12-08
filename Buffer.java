@@ -92,7 +92,8 @@ public class Buffer
      * @param pos position of byte
      */
     public void setByte(byte b, int pos) {
-        byteArray[pos] = b;
+        byteArray[pos % byteArray.length] = b;
+        markDirty();
     }
 
 

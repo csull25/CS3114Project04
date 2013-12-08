@@ -81,6 +81,11 @@ public class BufferPool
         this.file = new RandomAccessFile(fileName, "rw");
         this.tempArray = new byte[BLOCK_SIZE];
 
+        for (int i = 0; i < BLOCK_SIZE; i++) {
+            file.write(0);
+        }
+        file.seek(0);
+
         // initialize all the statistics to zero
         cacheHits = cacheMisses = diskReads = diskWrites = 0;
 
@@ -224,7 +229,8 @@ public class BufferPool
         Buffer buf;
         for (int i = 0; i < size; i++) {
             buf = getBufferByPosition(pos + i);
-            b[i] = buf.getByte((pos + i) % BLOCK_SIZE);
+            b[i] = buf.getByte(pos + i);
+//            System.out.println("byte " + i +": "+ b[i]);
         }
         return b;
     }
@@ -239,9 +245,9 @@ public class BufferPool
     public void writeData(byte[] b, int pos) throws IOException {
         Buffer buf;
         for (int i = 0; i < b.length; i++) {
+//            System.out.println("byte " + i +": "+ b[i]);
             buf = getBufferByPosition(pos + i);
-            buf.setByte(b[i], pos);
-            buf.markDirty();
+            buf.setByte(b[i], pos + i);
         }
     }
 
@@ -273,7 +279,7 @@ public class BufferPool
      * Add enough 0 bytes for a new block at end of file
      * @throws IOException
      */
-    private void expandFile() throws IOException {
+    public void expandFile() throws IOException {
         file.seek(FILE_SIZE);
         for (int i = 0; i < BLOCK_SIZE; i++) {
             file.write(0);
@@ -310,6 +316,7 @@ public class BufferPool
     public void closeFile()
         throws IOException
     {
+        this.flushBuffers();
         this.file.close();
     }
 
