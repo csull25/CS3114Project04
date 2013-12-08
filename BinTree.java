@@ -1359,7 +1359,6 @@ public class BinTree<T extends HasCoordinateAndHandle>
     {
         double longitude = 0;
         double latitude = 0;
-        // int length = (byteArray[0] << 8) + byteArray[1];
         for (int i = 0; i < 8; i++)
         {
             longitude += byteArray[i + 2] << (56 - 8 * i);

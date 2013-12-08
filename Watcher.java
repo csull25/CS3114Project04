@@ -142,11 +142,8 @@ public class Watcher
     public byte[] serialize()
     {
         byte[] ret = new byte[18 + name.length()];
-        byte[] size = new byte[2];
-
-        ByteBuffer.wrap(size).putInt(ret.length);
-        ret[0] = size[0];
-        ret[1] = size[1];
+        ret[0] = (byte)((ret.length >> 8) & 0xFF);
+        ret[1] = (byte)(ret.length & 0xFF);
 
         byte[] bytes = new byte[8];
         ByteBuffer.wrap(bytes).putDouble(getLongitude());
