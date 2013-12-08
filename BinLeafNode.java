@@ -20,6 +20,19 @@ public class BinLeafNode
     /**
      * Create a new BinLeafNode object.
      *
+     * @param element
+     *            the element stored in the BinLeafNode
+     */
+    public BinLeafNode(int element)
+    {
+        this.element = element;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Create a new BinLeafNode object.
+     *
      * @param myHandle
      *            the handle to this node
      * @param element
@@ -40,6 +53,19 @@ public class BinLeafNode
     public int getMyHandle()
     {
         return this.myHandle;
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Sets the handle of this BinNode.
+     *
+     * @param handle
+     *            the handle to this node
+     */
+    public void setMyHandle(int handle)
+    {
+        this.myHandle = handle;
     }
 
 
@@ -78,8 +104,7 @@ public class BinLeafNode
         byteArray[0] = 0;
         for (int i = 0; i < byteArray.length; i++)
         {
-            byteArray[i + 1] =
-                (byte)((element >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 1] = (byte)((element >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }

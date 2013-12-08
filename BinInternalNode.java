@@ -123,13 +123,15 @@ public class BinInternalNode
      */
     public byte[] serialize()
     {
-        byte[] byteArray = new byte[9];
+        // bytes 0,1 are size, 2-5 are left handle, 6-9 are right handle
+        byte[] byteArray = new byte[10];
         byteArray[0] = 0;
+        byteArray[1] = 10;
         for (int i = 0; i < 4; i++)
         {
-            byteArray[i + 1] =
+            byteArray[i + 2] =
                 (byte)((left >> (24 - 8 * i)) & 0xFF);
-            byteArray[i + 5] =
+            byteArray[i + 6] =
                 (byte)((right >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;

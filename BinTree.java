@@ -28,7 +28,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
     public BinTree(MemoryManager memoryManager)
     {
         this.root = null;
-        this.emptyLeafNode = new BinLeafNode(null, null);
+        this.emptyLeafNode = new BinLeafNode(0, -1); // -1 for null data
         // TO-DO
         this.memoryManager = memoryManager;
     }
@@ -65,6 +65,21 @@ public class BinTree<T extends HasCoordinateAndHandle>
         root = null;
     }
 
+    // ----------------------------------------------------------
+    /**
+     * Write element to memory file; null data returns handle -1
+     * @param element data to write
+     * @return handle to element in memory file
+     * @throws IOException
+     */
+    private int writeElement(T element) throws IOException {
+
+        if (element == null) {
+            return -1;
+        }
+
+        return memoryManager.write(element.serialize());
+    }
 
     /**
      * Inserts the given element with the given key into the tree.

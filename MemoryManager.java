@@ -56,19 +56,8 @@ public class MemoryManager {
      * @param h handle for position
      * @throws IOException
      */
-    public void write(byte[] b, Handle h) throws IOException {
-        write(b, h.getPosition());
-    }
-
-    // ----------------------------------------------------------
-    /**
-     * Write bytes to given position
-     * @param b bytes to write
-     * @param pos position to write to
-     * @throws IOException
-     */
-    private void write(byte[] b, int pos) throws IOException {
-        pool.writeData(b, pos);
+    public void write(byte[] b, int h) throws IOException {
+        write(b, h);
     }
 
     // ----------------------------------------------------------

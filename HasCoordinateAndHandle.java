@@ -16,7 +16,7 @@ public interface HasCoordinateAndHandle
      *
      * @return the handle
      */
-    public Handle getHandle();
+    public int getHandle();
 
     /**
      * Gets the coordinate of the object.
@@ -40,4 +40,11 @@ public interface HasCoordinateAndHandle
      * @return the latitude
      */
     public double getLatitude();
+
+    // ----------------------------------------------------------
+    /**
+     * Get byte array of object
+     * @return byte array of object
+     */
+    public byte[] serialize();
 }

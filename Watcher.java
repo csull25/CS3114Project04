@@ -1,3 +1,4 @@
+import java.nio.*;
 // -------------------------------------------------------------------------
 /**
  * This class represents a Watcher. A watcher has a name and a location. This
@@ -18,7 +19,7 @@ public class Watcher
     /**
      * The Handle of the watcher
      */
-    private Handle     handle;
+    private int        handle;
     /**
      * The name of the watcher
      */
@@ -42,21 +43,19 @@ public class Watcher
      * @param latitude
      *            (the latitude coordinate)
      */
-    public Watcher(
-        Handle handle,
-        String name,
-        double longitude,
-        double latitude)
+    public Watcher(int handle, String name, double longitude, double latitude)
     {
         this.handle = handle;
         this.name = name;
         this.coordinate = new Coordinate(longitude, latitude);
     }
 
+
     /**
      * @return the handle
      */
-    public Handle getHandle() {
+    public int getHandle()
+    {
         return handle;
     }
 
@@ -123,5 +122,36 @@ public class Watcher
     public String toString()
     {
         return getName() + " " + getCoordinate();
+    }
+
+    /**
+     * Returns the byte array of the watcher
+     */
+    public byte[] serialize()
+    {
+        byte[] ret = new byte[18 + name.length()];
+        byte[] size = new byte[2];
+
+        ByteBuffer.wrap(size).putInt(ret.length);
+        ret[0] = size[0];
+        ret[1] = size[1];
+
+        byte[] bytes = new byte[8];
+        ByteBuffer.wrap(bytes).putDouble(getLongitude());
+
+        int i;
+        for (i = 0; i < 8; i++)
+        {
+            ret[i + 2] = bytes[i];
+        }
+        ByteBuffer.wrap(bytes).putDouble(getLatitude());
+        for (i = 0; i < 8; i++) {
+            ret[i + 10] = bytes[i];
+        }
+        // save name byte array
+        for (i = 0; i < name.length(); i++) {
+            ret[i + 18] = (byte)name.charAt(i);
+        }
+        return ret;
     }
 }
