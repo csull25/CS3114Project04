@@ -74,18 +74,14 @@ public class BufferPool
         throws IOException
     {
         BLOCK_SIZE = bufferSize;
-        FILE_SIZE = bufferSize;
+        FILE_SIZE = 0;
 
         // create linked list of buffers, open file, create pointer tempArray
         this.pool = new LinkedList<Buffer>();
         this.file = new RandomAccessFile(fileName, "rw");
         this.tempArray = new byte[BLOCK_SIZE];
 
-        for (int i = 0; i < BLOCK_SIZE; i++)
-        {
-            file.write(0);
-        }
-        file.seek(0);
+        expandFile();
 
         // initialize all the statistics to zero
         cacheHits = cacheMisses = diskReads = diskWrites = 0;
@@ -323,14 +319,13 @@ public class BufferPool
     public void expandFile(LinkedQueue<FreeBlock> blocks)
         throws IOException
     {
-        FreeBlock first = blocks.peek();
-        FreeBlock block;
-        if (first != null)
+        if (blocks.getLength() != 0)
         {
+            FreeBlock first = blocks.peek();
+            FreeBlock block;
             do
             {
                 block = blocks.peek();
-                System.out.println(block);
                 if (block.getSize() + block.getPosition() == FILE_SIZE)
                 {
                     // last free block was at end of file and has been expanded
@@ -340,6 +335,9 @@ public class BufferPool
                 blocks.inqueue(blocks.dequeue());
             }
             while (blocks.peek() != first);
+        }
+        else {
+            blocks.inqueue(new FreeBlock(FILE_SIZE, BLOCK_SIZE));
         }
         expandFile();
     }
