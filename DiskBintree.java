@@ -96,8 +96,10 @@ public class DiskBintree
      *
      * @param watcher
      *            (the Watcher to be added)
+     * @throws IOException
      */
     private static void watcherAddRequest(String line)
+        throws IOException
     {
         // parse the add request for longitude, latitude, and name. Then create
         // that watcher, add the watcher to the linked list, and print the
@@ -110,39 +112,25 @@ public class DiskBintree
         String latitude = line.substring(index1, index2);
         String name = line.substring(index2 + 1);
         Watcher watcher =
-            new Watcher(name, new Double(longitude).doubleValue(), new Double(
-                latitude).doubleValue());
+            new Watcher(
+                0,
+                name,
+                new Double(longitude).doubleValue(),
+                new Double(latitude).doubleValue());
 
-        // not in BST
-        if (watcherBinarySearchTree.find(watcher) == null)
+        // not in the BinTree
+        if (watcherBinTree.find(watcher.getCoordinate()) == -1)
         {
-            watcherBinarySearchTree.insert(watcher);
-            System.out.println(watcher + " is added to the BST");
-
-            // not in the BinTree
-            if (watcherBinTree.find(watcher.getCoordinate()) == null)
-            {
-                // add to BinTree
-                watcherBinTree.insert(watcher);
-                System.out.println(watcher + " is added to the bintree");
-            }
-
-            // coordinates already in BinTree
-            else
-            {
-                System.out.println(longitude + " " + latitude
-                    + " duplicates a watcher already in the bintree");
-                // remove watcher from BST
-                watcherBinarySearchTree.remove(watcher);
-                System.out.println(name + " is removed from the BST");
-            }
+            // add to BinTree
+            watcherBinTree.insert(watcher);
+            System.out.println(watcher + " is added to the bintree");
         }
 
-        // already in BST
+        // coordinates already in BinTree
         else
         {
-            System.out.println(name
-                + " duplicates a watcher already in the BST");
+            System.out.println(longitude + " " + latitude
+                + " duplicates a watcher already in the bintree");
         }
     }
 
@@ -152,33 +140,29 @@ public class DiskBintree
      *
      * @param watcher
      *            (the Watcher to be removed)
+     * @throws IOException
      */
-    private static void watcherDeleteRequest(String line)
+    private static void watcherDeleteRequest(String command)
+        throws IOException
     {
         // parse the watcher's name from the request, then remove the watcher
         // from the linked list, and print the appropriate message
-        String name = line.substring(line.indexOf("delete") + 7);
 
-        Watcher watcher = new Watcher(name, 0, 0);
-        watcher = watcherBinarySearchTree.find(watcher);
-        if (watcher != null) // in BST
-        {
-            // remove watcher from BST and update that watcher
-            watcherBinarySearchTree.remove(watcher);
-            System.out.println(watcher + " is removed from the BST");
+        int space1 = command.indexOf(" ") + 1;
+        int space2 = command.indexOf(" ", space1);
+        double x = Double.parseDouble(command.substring(space1, space2));
+        space1 = space2 + 1;
+        space2 = command.indexOf(" ", space1);
+        double y = Double.parseDouble(command.substring(space1, space2));
 
-            // remove watcher form the BinTree
-            watcherBinTree.remove(watcher.getCoordinate());
-            watcherBinTree.organize();
+        Watcher watcher = new Watcher(0, "", x, y);
 
-            System.out.println(watcher + " is removed from the bintree");
-        }
+        // remove watcher form the BinTree
+        watcherBinTree.remove(watcher.getCoordinate());
+        watcherBinTree.organize();
 
-        // not in BST
-        else
-        {
-            System.out.println(name + " does not appear in the BST");
-        }
+        System.out.println(watcher + " is removed from the bintree");
+
     }
 
 
@@ -193,5 +177,4 @@ public class DiskBintree
         }
         System.out.println(watcherBinTree); // toString()
     }
-
 }
