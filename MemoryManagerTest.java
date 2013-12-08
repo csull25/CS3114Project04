@@ -56,7 +56,7 @@ public class MemoryManagerTest extends TestCase
         setup();
         byte[] w = new byte[2049];
         for (int i = 0; i < w.length; i++) {
-            w[i] = (byte)i;
+            w[i] = (byte)(i % 128);
         }
         byte[] bytes = new byte[4];
 
@@ -66,5 +66,6 @@ public class MemoryManagerTest extends TestCase
 
         byte[] b = man.read(man.write(w));
         assertEquals(2049, b.length);
+        assertEquals(127, b[2047]);
     }
 }
