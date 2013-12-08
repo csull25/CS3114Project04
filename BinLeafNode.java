@@ -1,8 +1,8 @@
 // -------------------------------------------------------------------------
 /**
  * Class that represents a leaf node for a BinTree. It contains only a single
- * handle to a data element, but has no handles to other nodes. If the handle
- * element is null, then this class represents an empty leaf node.
+ * handle to a data element, but has no handles to other nodes. If the
+ * element handle is -1, then this class represents an empty leaf node.
  *
  * @author Connor J. Sullivan (csull)
  * @version 2013.12.07
@@ -25,6 +25,7 @@ public class BinLeafNode
      */
     public BinLeafNode(int element)
     {
+        // this.myHandle = ???
         this.element = element;
     }
 
@@ -56,7 +57,6 @@ public class BinLeafNode
     }
 
 
-    // ----------------------------------------------------------
     /**
      * Sets the handle of this BinNode.
      *

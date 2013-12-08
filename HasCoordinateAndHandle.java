@@ -1,4 +1,3 @@
-
 // -------------------------------------------------------------------------
 /**
  * Interface that is used to generalize a class that has a coordinate.
@@ -17,6 +16,16 @@ public interface HasCoordinateAndHandle
      * @return the handle
      */
     public int getHandle();
+
+
+    /**
+     * Sets the handle of this BinNode.
+     *
+     * @param handle
+     *            the handle to this node
+     */
+    public void setMyHandle(int handle);
+
 
     /**
      * Gets the coordinate of the object.
@@ -41,9 +50,11 @@ public interface HasCoordinateAndHandle
      */
     public double getLatitude();
 
+
     // ----------------------------------------------------------
     /**
      * Get byte array of object
+     *
      * @return byte array of object
      */
     public byte[] serialize();

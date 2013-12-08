@@ -28,8 +28,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
     public BinTree(MemoryManager memoryManager)
     {
         this.root = null;
-        this.emptyLeafNode = new BinLeafNode(0, -1); // -1 for null data
-        // TO-DO
+        this.emptyLeafNode = new BinLeafNode(-1, -1); // -1 for null data
         this.memoryManager = memoryManager;
     }
 
@@ -65,21 +64,37 @@ public class BinTree<T extends HasCoordinateAndHandle>
         root = null;
     }
 
-    // ----------------------------------------------------------
+
     /**
-     * Write element to memory file; null data returns handle -1
-     * @param element data to write
-     * @return handle to element in memory file
+     * Gets the BinNode that corresponds to the given handle
+     *
+     * @param h
+     *            the handle of the BinNode
+     * @return a BinNode that is represented by h
      * @throws IOException
      */
-    private int writeElement(T element) throws IOException {
-
-        if (element == null) {
-            return -1;
-        }
-
-        return memoryManager.write(element.serialize());
+    public BinNode handleToBinNode(int h)
+        throws IOException
+    {
+        return deserializeBinNode(h, memoryManager.read(h));
     }
+
+
+    /**
+     * Gets the Coordinate of the HsCoordinate that corresponds to the given
+     * handle.
+     *
+     * @param h
+     *            the handle of the HasCoordinate object
+     * @return the Coordinate of the HasCoordinate that is represented by h
+     * @throws IOException
+     */
+    public Coordinate handleToCoordinate(int h)
+        throws IOException
+    {
+        return deserializeCoordinate(memoryManager.read(h));
+    }
+
 
     /**
      * Inserts the given element with the given key into the tree.
@@ -91,11 +106,12 @@ public class BinTree<T extends HasCoordinateAndHandle>
     public void insert(T element)
         throws IOException
     {
+        writeNewElement(element);
         // make the new element the root if the root is null
         if (root == null)
         {
-            root = new BinLeafNode(null, element.getHandle());
-            // TO-DO
+            root = new BinLeafNode(element.getHandle());
+            writeNewBinNode(root);
         }
         else
         {
@@ -103,8 +119,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
             // children appropriately
             if (root.isLeafNode())
             {
-                BinInternalNode newRoot = new BinInternalNode(null);
-                // TO-DO
+                BinInternalNode newRoot = new BinInternalNode(-1);
+                writeNewBinNode(newRoot);
 
                 if (deserializeCoordinate(
                     memoryManager.read(((BinLeafNode)root).getElement()))
@@ -112,11 +128,13 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 {
                     newRoot.setLeft(root);
                     newRoot.setRight(emptyLeafNode);
+                    writeBinNode(newRoot);
                 }
                 else
                 {
                     newRoot.setRight(root);
                     newRoot.setLeft(emptyLeafNode);
+                    writeBinNode(newRoot);
                 }
                 root = newRoot;
             }
@@ -312,11 +330,11 @@ public class BinTree<T extends HasCoordinateAndHandle>
      *
      * @param coordinate
      *            the key being used to find the object
-     * @return the handle associated with the coordinate or null if no object
+     * @return the handle associated with the coordinate or -1 if no object
      *         was found
      * @throws IOException
      */
-    public Handle find(Coordinate coordinate)
+    public int find(Coordinate coordinate)
         throws IOException
     {
         // call the recursive method
@@ -442,7 +460,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
      * Helper method for the insert function. It is a recursive method that
      * traverses the BinTree until the given object is successfully inserted.
      *
-     * @param element
+     * @param elementHandle
      *            element being inserted
      * @param node
      *            node being looked at
@@ -459,7 +477,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
      * @throws IOException
      */
     private void insert(
-        Handle element,
+        int elementHandle,
         BinNode node,
         BinInternalNode parent,
         int depth,
@@ -476,8 +494,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
             // given element
             if (node == emptyLeafNode)
             {
-                BinLeafNode newLeafNode = new BinLeafNode(null, element);
-                // TO-DO
+                BinLeafNode newLeafNode = new BinLeafNode(elementHandle);
+                writeNewBinNode(newLeafNode);
                 if (nodeIsALeftChild)
                 {
                     parent.setLeft(newLeafNode);
@@ -493,8 +511,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
             // the depth of the tree (for longitude or latitude splitting).
             else
             {
-                BinInternalNode newInternalNode = new BinInternalNode(null);
-                // TO-DO
+                BinInternalNode newInternalNode = new BinInternalNode(-1);
+                writeNewBinNode(newInternalNode);
                 if (depth % 2 == 0)
                 {
                     if (deserializeCoordinate(
@@ -536,7 +554,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 }
                 // call the recursive method
                 this.insert(
-                    element,
+                    elementHandle,
                     newInternalNode,
                     parent,
                     depth,
@@ -554,10 +572,10 @@ public class BinTree<T extends HasCoordinateAndHandle>
         {
             if (depth % 2 == 0)
             {
-                if (handleToCoordinate(element).getLongitude() + 180.0 < (minLongitude + maxLongitude) / 2.0)
+                if (handleToCoordinate(elementHandle).getLongitude() + 180.0 < (minLongitude + maxLongitude) / 2.0)
                 {
                     insert(
-                        element,
+                        elementHandle,
                         handleToBinNode(((BinInternalNode)node).getLeft()),
                         (BinInternalNode)node,
                         depth + 1,
@@ -570,7 +588,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 else
                 {
                     insert(
-                        element,
+                        elementHandle,
                         handleToBinNode(((BinInternalNode)node).getRight()),
                         (BinInternalNode)node,
                         depth + 1,
@@ -583,10 +601,10 @@ public class BinTree<T extends HasCoordinateAndHandle>
             }
             else
             {
-                if (handleToCoordinate(element).getLatitude() + 90.0 < (minLatitude + maxLatitude) / 2.0)
+                if (handleToCoordinate(elementHandle).getLatitude() + 90.0 < (minLatitude + maxLatitude) / 2.0)
                 {
                     insert(
-                        element,
+                        elementHandle,
                         handleToBinNode(((BinInternalNode)node).getLeft()),
                         (BinInternalNode)node,
                         depth + 1,
@@ -599,7 +617,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 else
                 {
                     insert(
-                        element,
+                        elementHandle,
                         handleToBinNode(((BinInternalNode)node).getRight()),
                         (BinInternalNode)node,
                         depth + 1,
@@ -876,7 +894,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
      *         found to match
      * @throws IOException
      */
-    private Handle find(
+    private int find(
         Coordinate coordinate,
         BinNode node,
         int depth,
@@ -886,27 +904,30 @@ public class BinTree<T extends HasCoordinateAndHandle>
         double maxLatitude)
         throws IOException
     {
-        // If the node is null, then the coordinate wasn't found so return null.
+        // If the node is null, then the coordinate wasn't found so return -1.
         if (node == null)
         {
-            return null;
+            return -1;
         }
         // If the node is a leaf, then check the element's coordinates. If they
-        // match, then return the element; otherwise, return null.
+        // match, then return the element; otherwise, return -1.
         if (node.isLeafNode())
         {
-            Handle element = ((BinLeafNode)node).getElement();
-            if (element != null
-                && handleToCoordinate(element).getLongitude() == coordinate
+            int elementHandle = ((BinLeafNode)node).getElement();
+
+            // removed 'elementHandle != null' as first part of if
+
+            if (node != emptyLeafNode
+                && handleToCoordinate(elementHandle).getLongitude() == coordinate
                     .getLongitude()
-                && handleToCoordinate(element).getLatitude() == coordinate
+                && handleToCoordinate(elementHandle).getLatitude() == coordinate
                     .getLatitude())
             {
-                return element;
+                return elementHandle;
             }
             else
             {
-                return null;
+                return -1;
             }
         }
         // Call the recursive method with parameters depending on the depth
@@ -1015,7 +1036,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
         {
             if (node != emptyLeafNode)
             {
-                Handle element = ((BinLeafNode)node).getElement();
+                int element = ((BinLeafNode)node).getElement();
 
                 if (Math.pow(handleToCoordinate(element).getLatitude()
                     - (minLatitude + maxLatitude) / 2.0, 2)
@@ -1312,7 +1333,6 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 handle += byteArray[i + 3] << (24 - 8 * i);
             }
             return new BinLeafNode(myHandle, handle);
-            // TO-DO
         }
         else
         {
@@ -1322,11 +1342,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 handle1 += byteArray[i + 3] << (24 - 8 * i);
                 handle2 += byteArray[i + 7] << (24 - 8 * i);
             }
-            return new BinInternalNode(
-                myHandle,
-                handle1,
-                handle2);
-            // TO-DO
+            return new BinInternalNode(myHandle, handle1, handle2);
         }
     }
 
@@ -1354,32 +1370,53 @@ public class BinTree<T extends HasCoordinateAndHandle>
 
 
     /**
-     * Gets the BinNode that corresponds to the given handle
+     * Writes a new element to memory file.
      *
-     * @param h
-     *            the Handle of the BinNode
-     * @return a BinNode that is represented by h
+     * @param element
+     *            data to write
      * @throws IOException
      */
-    public BinNode handleToBinNode(int h)
+    private void writeNewElement(T element)
         throws IOException
     {
-        return deserializeBinNode(h, memoryManager.read(h));
+        if (element != null)
+        {
+            element.setMyHandle(memoryManager.write(element.serialize()));
+        }
     }
 
 
     /**
-     * Gets the Coordinate of the HsCoordinate that corresponds to the given
-     * handle.
+     * Writes a new BinNode to memory file.
      *
-     * @param h
-     *            the Handle of the HasCoordinate object
-     * @return the Coordinate of the HasCoordinate that is represented by h
+     * @param node
+     *            data to write
      * @throws IOException
      */
-    public Coordinate handleToCoordinate(int h)
+    private void writeNewBinNode(BinNode node)
         throws IOException
     {
-        return deserializeCoordinate(memoryManager.read(h));
+        if (node != null)
+        {
+            node.setMyHandle(memoryManager.write(node.serialize()));
+        }
     }
+
+
+    /**
+     * Writes a BinNode to memory file.
+     *
+     * @param node
+     *            data to write
+     * @throws IOException
+     */
+    private void writeBinNode(BinNode node)
+        throws IOException
+    {
+        if (node != null)
+        {
+            memoryManager.write(node.serialize(), node.getMyHandle());
+        }
+    }
+
 }

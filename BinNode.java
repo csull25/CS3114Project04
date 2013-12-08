@@ -23,6 +23,13 @@ public interface BinNode
      */
     public int getMyHandle();
 
+    /**
+     * Sets the handle of this BinNode.
+     *
+     * @param handle
+     *            the handle to this node
+     */
+    public void setMyHandle(int handle);
 
     /**
      * 'Serializes' the node. It converts the node into a byte array.

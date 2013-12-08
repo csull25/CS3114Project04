@@ -34,7 +34,8 @@ public class BinInternalNode
     /**
      * Create a new BinInternalNode object.
      *
-     * @param myHandle the handle to this node
+     * @param myHandle
+     *            the handle to this node
      * @param left
      *            the left Handle
      * @param right
@@ -47,13 +48,27 @@ public class BinInternalNode
         this.right = right;
     }
 
+
     /**
      * Returns the handle of this BinNode.
      *
      * @return the myHandle field
      */
-    public int getMyHandle() {
+    public int getMyHandle()
+    {
         return this.myHandle;
+    }
+
+
+    /**
+     * Sets the handle of this BinNode.
+     *
+     * @param handle
+     *            the handle to this node
+     */
+    public void setMyHandle(int handle)
+    {
+        this.myHandle = handle;
     }
 
 
@@ -129,11 +144,10 @@ public class BinInternalNode
         byteArray[1] = 10;
         for (int i = 0; i < 4; i++)
         {
-            byteArray[i + 2] =
-                (byte)((left >> (24 - 8 * i)) & 0xFF);
-            byteArray[i + 6] =
-                (byte)((right >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 2] = (byte)((left >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 6] = (byte)((right >> (24 - 8 * i)) & 0xFF);
         }
         return byteArray;
     }
+
 }
