@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.io.IOException;
 import junit.framework.TestCase;
 
@@ -41,8 +42,29 @@ public class MemoryManagerTest extends TestCase
         setup();
         byte[] w = {0, 3, 3};
         man.write(w);
-        byte[] b = man.read(0, 3);
+        byte[] b = man.read(0);
         assertEquals(0, b[0]);
         assertEquals(3, b[2]);
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Read/Write that involves expanding file
+     * @throws IOException
+     */
+    public void testComplexReadWrite() throws IOException {
+        setup();
+        byte[] w = new byte[2049];
+        for (int i = 0; i < w.length; i++) {
+            w[i] = (byte)i;
+        }
+        byte[] bytes = new byte[4];
+
+        ByteBuffer.wrap(bytes).putInt(2049);
+        w[0] = bytes[2];
+        w[1] = bytes[3];
+
+        byte[] b = man.read(man.write(w));
+        assertEquals(2049, b.length);
     }
 }

@@ -284,6 +284,7 @@ public class BufferPool
         for (int i = 0; i < BLOCK_SIZE; i++) {
             file.write(0);
         }
+        FILE_SIZE += BLOCK_SIZE;
     }
 
     // ----------------------------------------------------------
@@ -300,7 +301,7 @@ public class BufferPool
             if (block.getSize() + block.getPosition() == FILE_SIZE ) {
                 // last free block was at end of file and has been expanded
                 block.setSize(block.getSize() + BLOCK_SIZE);
-                return;
+                break; // jump to file expansion
             }
             blocks.inqueue(blocks.dequeue());
         } while (blocks.peek() != first);

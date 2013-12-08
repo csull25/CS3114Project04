@@ -82,7 +82,7 @@ public class Buffer
      * @return Byte from array
      */
     public byte getByte(int pos) {
-        return byteArray[pos];
+        return byteArray[pos % byteArray.length];
     }
 
     // ----------------------------------------------------------
