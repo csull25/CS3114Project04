@@ -1,4 +1,5 @@
 import java.nio.*;
+
 // -------------------------------------------------------------------------
 /**
  * This class represents a Watcher. A watcher has a name and a location. This
@@ -57,6 +58,16 @@ public class Watcher
     public int getHandle()
     {
         return handle;
+    }
+
+
+    /**
+     * @param handle
+     *            the handle to be set
+     */
+    public void setHandle(int handle)
+    {
+        this.handle = handle;
     }
 
 
@@ -124,6 +135,7 @@ public class Watcher
         return getName() + " " + getCoordinate();
     }
 
+
     /**
      * Returns the byte array of the watcher
      */
@@ -145,11 +157,13 @@ public class Watcher
             ret[i + 2] = bytes[i];
         }
         ByteBuffer.wrap(bytes).putDouble(getLatitude());
-        for (i = 0; i < 8; i++) {
+        for (i = 0; i < 8; i++)
+        {
             ret[i + 10] = bytes[i];
         }
         // save name byte array
-        for (i = 0; i < name.length(); i++) {
+        for (i = 0; i < name.length(); i++)
+        {
             ret[i + 18] = (byte)name.charAt(i);
         }
         return ret;

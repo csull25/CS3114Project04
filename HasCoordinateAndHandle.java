@@ -24,7 +24,7 @@ public interface HasCoordinateAndHandle
      * @param handle
      *            the handle to this node
      */
-    public void setMyHandle(int handle);
+    public void setHandle(int handle);
 
 
     /**

@@ -25,7 +25,7 @@ public class WatcherTest
         throws Exception
     {
         super.setUp();
-        watcher = new Watcher(new Handle(32), "tester", 0, 1);
+        watcher = new Watcher(32, "tester", 0, 1);
     }
 
 
@@ -34,7 +34,16 @@ public class WatcherTest
      */
     public void testGetHandle()
     {
-        assertEquals(32, watcher.getHandle().getPosition());
+        assertEquals(32, watcher.getHandle());
+    }
+
+    /**
+     * Test method for {@link Watcher#setHandle(int)}.
+     */
+    public void testSetHandle()
+    {
+        watcher.setHandle(2);
+        assertEquals(2, watcher.getHandle());
     }
 
     /**
@@ -81,8 +90,8 @@ public class WatcherTest
     {
         assertFalse(watcher.equals(null));
         assertFalse(watcher.equals("string"));
-        assertTrue(watcher.equals(new Watcher(new Handle(65), "tester", 2, 3)));
-        assertFalse(watcher.equals(new Watcher(new Handle(65), "test", 2, 3)));
+        assertTrue(watcher.equals(new Watcher(65, "tester", 2, 3)));
+        assertFalse(watcher.equals(new Watcher(65, "test", 2, 3)));
     }
 
 

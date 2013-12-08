@@ -26,9 +26,18 @@ public class BinInternalNodeTest
     /**
      * Test method for {@link BinInternalNode#getMyHandle()}.
      */
-    public void testMyHandle()
+    public void testGetMyHandle()
     {
         assertEquals(5, node.getMyHandle());
+    }
+
+    /**
+     * Test method for {@link BinInternalNode#setMyHandle(int)}.
+     */
+    public void testSetMyHandle()
+    {
+        node.setMyHandle(55);
+        assertEquals(55, node.getMyHandle());
     }
 
     /**
@@ -36,7 +45,7 @@ public class BinInternalNodeTest
      */
     public void testGetLeft()
     {
-        assertNull(node.getLeft());
+        assertEquals(-1, node.getLeft());
     }
 
 
@@ -45,7 +54,7 @@ public class BinInternalNodeTest
      */
     public void testGetRight()
     {
-        assertNull(node.getRight());
+        assertEquals(-1, node.getRight());
     }
 
 

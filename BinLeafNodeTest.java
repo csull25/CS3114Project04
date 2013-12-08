@@ -32,6 +32,15 @@ public class BinLeafNodeTest
     }
 
     /**
+     * Test method for {@link BinLeafNode#setMyHandle(int)}.
+     */
+    public void testSetMyHandle()
+    {
+        node.setMyHandle(11);
+        assertEquals(11, node.getMyHandle());
+    }
+
+    /**
      * Test method for {@link BinLeafNode#getElement()}.
      */
     public void testGetElement()

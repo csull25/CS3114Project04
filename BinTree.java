@@ -1381,7 +1381,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
     {
         if (element != null)
         {
-            element.setMyHandle(memoryManager.write(element.serialize()));
+            element.setHandle(memoryManager.write(element.serialize()));
         }
     }
 
