@@ -24,12 +24,15 @@ public class BinTree<T extends HasCoordinateAndHandle>
      *
      * @param memoryManager
      *            the memoryManger to be used with this BinTree
+     * @throws IOException
      */
     public BinTree(MemoryManager memoryManager)
+        throws IOException
     {
         this.root = null;
-        this.emptyLeafNode = new BinLeafNode(-1, -1); // -1 for null data
         this.memoryManager = memoryManager;
+        this.emptyLeafNode = new BinLeafNode(-1, -1); // -1 for null data
+        writeNewBinNode(emptyLeafNode);
     }
 
 
@@ -122,20 +125,18 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 BinInternalNode newRoot = new BinInternalNode(-1);
                 writeNewBinNode(newRoot);
 
-                if (deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)root).getElement()))
+                if (handleToCoordinate(((BinLeafNode)root).getElement())
                     .getLongitude() < 0.0)
                 {
                     newRoot.setLeft(root);
                     newRoot.setRight(emptyLeafNode);
-                    writeBinNode(newRoot);
                 }
                 else
                 {
                     newRoot.setRight(root);
                     newRoot.setLeft(emptyLeafNode);
-                    writeBinNode(newRoot);
                 }
+                writeBinNode(newRoot);
                 root = newRoot;
             }
             // call the recursive method
@@ -190,11 +191,9 @@ public class BinTree<T extends HasCoordinateAndHandle>
         // coordinate. If it matches, then remove it; otherwise don't
         if (root.isLeafNode())
         {
-            if (deserializeCoordinate(
-                memoryManager.read(((BinLeafNode)root).getElement()))
+            if (handleToCoordinate(((BinLeafNode)root).getElement())
                 .getLongitude() == coordinate.getLongitude()
-                && deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)root).getElement()))
+                && handleToCoordinate(((BinLeafNode)root).getElement())
                     .getLatitude() == coordinate.getLatitude())
             {
                 root = null;
@@ -212,27 +211,25 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 handleToBinNode(((BinInternalNode)root).getRight());
             if (leftChild.isLeafNode()
                 && leftChild != emptyLeafNode
-                && deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)leftChild).getElement()))
+                && handleToCoordinate(((BinLeafNode)leftChild).getElement())
                     .getLongitude() == coordinate.getLongitude()
-                && deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)leftChild).getElement()))
+                && handleToCoordinate(((BinLeafNode)leftChild).getElement())
                     .getLatitude() == coordinate.getLatitude())
             {
                 ((BinInternalNode)root).setLeft(emptyLeafNode);
+                writeBinNode(root);
                 return true;
 
             }
             if (rightChild.isLeafNode()
                 && rightChild != emptyLeafNode
-                && deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)rightChild).getElement()))
+                && handleToCoordinate(((BinLeafNode)rightChild).getElement())
                     .getLongitude() == coordinate.getLongitude()
-                && deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)rightChild).getElement()))
+                && handleToCoordinate(((BinLeafNode)rightChild).getElement())
                     .getLatitude() == coordinate.getLatitude())
             {
                 ((BinInternalNode)root).setRight(emptyLeafNode);
+                writeBinNode(root);
                 return true;
             }
 
@@ -330,8 +327,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
      *
      * @param coordinate
      *            the key being used to find the object
-     * @return the handle associated with the coordinate or -1 if no object
-     *         was found
+     * @return the handle associated with the coordinate or -1 if no object was
+     *         found
      * @throws IOException
      */
     public int find(Coordinate coordinate)
@@ -405,11 +402,13 @@ public class BinTree<T extends HasCoordinateAndHandle>
         if (leftChild == emptyLeafNode && rightChild.isLeafNode())
         {
             root = rightChild;
+            // delete node?
             return;
         }
         else if (leftChild.isLeafNode() && rightChild == emptyLeafNode)
         {
             root = leftChild;
+            // delete node?
             return;
         }
         // While something was rearranged, continue to call the recursive
@@ -504,6 +503,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 {
                     parent.setRight(newLeafNode);
                 }
+                writeBinNode(parent);
+                // return?
             }
             // if the node being looked at is a leaf, then replace it with a
             // new internal node with children being the current node and an
@@ -515,8 +516,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 writeNewBinNode(newInternalNode);
                 if (depth % 2 == 0)
                 {
-                    if (deserializeCoordinate(
-                        memoryManager.read(((BinLeafNode)node).getElement()))
+                    if (handleToCoordinate(((BinLeafNode)node).getElement())
                         .getLongitude() + 180 < (minLongitude + maxLongitude) / 2.0)
                     {
                         newInternalNode.setLeft(node);
@@ -531,8 +531,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 // else if (depth % 2 == 1)
                 else
                 {
-                    if (deserializeCoordinate(
-                        memoryManager.read(((BinLeafNode)node).getElement()))
+                    if (handleToCoordinate(((BinLeafNode)node).getElement())
                         .getLatitude() + 90 < (minLatitude + maxLatitude) / 2.0)
                     {
                         newInternalNode.setLeft(node);
@@ -544,6 +543,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                         newInternalNode.setRight(node);
                     }
                 }
+                writeBinNode(newInternalNode);
                 if (nodeIsALeftChild)
                 {
                     parent.setLeft(newInternalNode);
@@ -552,6 +552,7 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 {
                     parent.setRight(newInternalNode);
                 }
+                writeBinNode(parent);
                 // call the recursive method
                 this.insert(
                     elementHandle,
@@ -680,11 +681,9 @@ public class BinTree<T extends HasCoordinateAndHandle>
             // remove that node by replacing it with an empty leaf node. The
             // specifics of the replacing is determined by the ancestry of the
             // node being replaced.
-            if (deserializeCoordinate(
-                memoryManager.read(((BinLeafNode)node).getElement()))
+            if (handleToCoordinate(((BinLeafNode)node).getElement())
                 .getLongitude() == coordinate.getLongitude()
-                && deserializeCoordinate(
-                    memoryManager.read(((BinLeafNode)node).getElement()))
+                && handleToCoordinate(((BinLeafNode)node).getElement())
                     .getLatitude() == coordinate.getLatitude())
             {
                 if (nodeHasALeftParent)
@@ -693,12 +692,14 @@ public class BinTree<T extends HasCoordinateAndHandle>
                     {
                         ((BinInternalNode)handleToBinNode(grandparent.getLeft()))
                             .setLeft(emptyLeafNode);
+                        writeBinNode(handleToBinNode(grandparent.getLeft()));
                         return true;
                     }
                     else
                     {
                         ((BinInternalNode)handleToBinNode(grandparent.getLeft()))
                             .setRight(emptyLeafNode);
+                        writeBinNode(handleToBinNode(grandparent.getLeft()));
                         return true;
                     }
                 }
@@ -708,12 +709,14 @@ public class BinTree<T extends HasCoordinateAndHandle>
                     {
                         ((BinInternalNode)handleToBinNode(grandparent
                             .getRight())).setLeft(emptyLeafNode);
+                        writeBinNode(handleToBinNode(grandparent.getRight()));
                         return true;
                     }
                     else
                     {
                         ((BinInternalNode)handleToBinNode(grandparent
                             .getRight())).setRight(emptyLeafNode);
+                        writeBinNode(handleToBinNode(grandparent.getRight()));
                         return true;
                     }
                 }
@@ -914,8 +917,6 @@ public class BinTree<T extends HasCoordinateAndHandle>
         if (node.isLeafNode())
         {
             int elementHandle = ((BinLeafNode)node).getElement();
-
-            // removed 'elementHandle != null' as first part of if
 
             if (node != emptyLeafNode
                 && handleToCoordinate(elementHandle).getLongitude() == coordinate
@@ -1254,12 +1255,16 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 if (leftChild == emptyLeafNode && rightChild != emptyLeafNode)
                 {
                     grandparent.setLeft(rightChild);
+                    writeBinNode(grandparent);
+                    // delete any nodes?
                     return true;
                 }
                 else if (leftChild != emptyLeafNode
                     && rightChild == emptyLeafNode)
                 {
                     grandparent.setLeft(leftChild);
+                    writeBinNode(grandparent);
+                    // delete any nodes?
                     return true;
                 }
             }
@@ -1288,12 +1293,16 @@ public class BinTree<T extends HasCoordinateAndHandle>
                 if (leftChild == emptyLeafNode && rightChild != emptyLeafNode)
                 {
                     grandparent.setRight(rightChild);
+                    writeBinNode(grandparent);
+                    // delete any nodes?
                     return true;
                 }
                 else if (leftChild != emptyLeafNode
                     && rightChild == emptyLeafNode)
                 {
                     grandparent.setRight(leftChild);
+                    writeBinNode(grandparent);
+                    // delete any nodes?
                     return true;
                 }
             }
