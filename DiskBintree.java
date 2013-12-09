@@ -74,6 +74,7 @@ public class DiskBintree
         String command;
         while ((command = commandFile.readLine()) != null)
         {
+            System.out.println("\t" + command);
             if (command.contains("add"))
             {
                 watcherAddRequest(command);
@@ -86,7 +87,10 @@ public class DiskBintree
             {
                 debugRequest();
             }
-            else if (command.contains("search"));
+            else if (command.contains("search"))
+            {
+                searchRequest(command);
+            }
         }
         commandFile.close();
     }
@@ -95,8 +99,8 @@ public class DiskBintree
     /**
      * Processes a watcher add request
      *
-     * @param watcher
-     *            (the Watcher to be added)
+     * @param command
+     *            (the command line to be parsed)
      * @throws IOException
      */
     private static void watcherAddRequest(String line)
@@ -126,11 +130,10 @@ public class DiskBintree
             watcherBinTree.insert(watcher);
             System.out.println(watcher + " is added to the bintree");
         }
-
         // coordinates already in BinTree
         else
         {
-            System.out.println(longitude + " " + latitude
+            System.out.println(watcher
                 + " duplicates a watcher already in the bintree");
         }
     }
@@ -139,8 +142,8 @@ public class DiskBintree
     /**
      * Processes a watcher delete request.
      *
-     * @param watcher
-     *            (the Watcher to be removed)
+     * @param command
+     *            (the command line to be parsed)
      * @throws IOException
      */
     private static void watcherDeleteRequest(String command)
@@ -152,8 +155,8 @@ public class DiskBintree
         int space2 = command.indexOf(" ", space1);
         double x = Double.parseDouble(command.substring(space1, space2));
         space1 = space2 + 1;
-        space2 = command.indexOf(" ", space1);
-        double y = Double.parseDouble(command.substring(space1, space2));
+        // space2 = command.indexOf(" ", space1);
+        double y = Double.parseDouble(command.substring(space1));
 
         // create watcher and set its name
         Watcher watcher = new Watcher(-1, "", x, y);
@@ -175,6 +178,35 @@ public class DiskBintree
     private static void debugRequest()
     {
         System.out.println(watcherBinTree); // toString()
+        System.out.println("XXXXXXXXXXX TO-DO XXXXXXXXXXXX");
+    }
+
+
+    /**
+     * Processes a search request.
+     *
+     * @param command
+     *            (the command line to be parsed)
+     * @throws IOException
+     */
+    private static void searchRequest(String command)
+        throws IOException
+    {
+        int space1 = command.indexOf(" ") + 1;
+        int space2 = command.indexOf(" ", space1);
+        double x = Double.parseDouble(command.substring(space1, space2));
+        space1 = space2 + 1;
+        space2 = command.indexOf(" ", space1);
+        double y = Double.parseDouble(command.substring(space1, space2));
+        space1 = space2 + 1;
+        // space2 = command.indexOf(" ", space1);
+        double r = Double.parseDouble(command.substring(space1));
+
+        System.out.println("Search " + x + " " + y + " " + r
+            + " returned the following watchers:");
+        System.out.println("Watcher search caused "
+            + watcherBinTree.regionSearch(x, y, r)
+            + " bintree nodes to be visited.");
     }
 
 

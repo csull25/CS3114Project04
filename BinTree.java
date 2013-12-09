@@ -350,24 +350,19 @@ public class BinTree<T extends HasCoordinateAndHandle>
 
     /**
      * Searches the given region in the bin tree. This method returns the number
-     * of nodes visited during the search.
+     * of nodes visited during the search. The region is given by a point with a
+     * radius.
      *
-     * @param minLongitude
-     *            the minimum longitude of the bounding box
-     * @param maxLongitude
-     *            the maximum longitude of the bounding box
-     * @param minLatitude
-     *            the minimum latitude of the bounding box
-     * @param maxLatitude
-     *            the maximum latitude of the bounding box
+     * @param longitude
+     *            the longitude of the center point
+     * @param latitude
+     *            the latitude of the center point
+     * @param radius
+     *            the radius of the region
      * @return number of nodes visited during the search
      * @throws IOException
      */
-    public int regionSearch(
-        double minLongitude,
-        double maxLongitude,
-        double minLatitude,
-        double maxLatitude)
+    public int regionSearch(double longitude, double latitude, double radius)
         throws IOException
     {
         // if the root is null then the tree is empty
@@ -379,10 +374,10 @@ public class BinTree<T extends HasCoordinateAndHandle>
         return regionSearch(
             root,
             0,
-            minLongitude,
-            maxLongitude,
-            minLatitude,
-            maxLatitude,
+            longitude - radius,
+            longitude + radius,
+            latitude - radius,
+            latitude + radius,
             0.0,
             360.0,
             0.0,

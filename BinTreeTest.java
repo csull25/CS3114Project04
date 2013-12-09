@@ -173,7 +173,7 @@ public class BinTreeTest
 
     /**
      * Test method for
-     * {@link BinTree#regionSearch(double, double, double, double)}.
+     * {@link BinTree#regionSearch(double, double, double)}.
      *
      * @throws IOException
      */
@@ -191,13 +191,13 @@ public class BinTreeTest
         tree.insert(watcher4);
 
         System.out.println("\nBegin regionSearch test\n");
-        assertEquals(9, tree.regionSearch(-180, 180, -90, 90));
+        assertEquals(9, tree.regionSearch(0, 0, 180));
         System.out.println("\n");
-        assertEquals(6, tree.regionSearch(-180, -1, -90, 90));
+        assertEquals(6, tree.regionSearch(-91, 0, 90));
         System.out.println("\n");
-        assertEquals(7, tree.regionSearch(-180, 180, 0, 90));
+        assertEquals(7, tree.regionSearch(0, 180, 180));
         System.out.println("\n");
-        assertEquals(4, tree.regionSearch(-140, -130, 40, 50));
+        assertEquals(4, tree.regionSearch(-135, 45, 5));
         System.out.println("\nEnd regionSearch test\n"
             + "--------------------------------------------\n");
 
