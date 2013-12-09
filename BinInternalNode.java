@@ -1,3 +1,5 @@
+import java.nio.ByteBuffer;
+
 // -------------------------------------------------------------------------
 /**
  * Class that represents an internal node of a BinTree. It contains no data
@@ -144,10 +146,17 @@ public class BinInternalNode
         byteArray[0] = 0;
         byteArray[1] = 11;
         byteArray[2] = 0;
+
+        byte[] leftArr = new byte[4];
+        byte[] rightArr = new byte[4];
+
+        ByteBuffer.wrap(leftArr).putInt(left);
+        ByteBuffer.wrap(rightArr).putInt(right);
+
         for (int i = 0; i < 4; i++)
         {
-            byteArray[i + 3] = (byte)((left >> (24 - 8 * i)) & 0xFF);
-            byteArray[i + 7] = (byte)((right >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 3] = leftArr[i];
+            byteArray[i + 7] = rightArr[i];
         }
         return byteArray;
     }

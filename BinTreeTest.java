@@ -57,6 +57,8 @@ public class BinTreeTest
             watcher1.getHandle(),
             ((BinLeafNode)tree.getRoot()).getElement());
 
+        //System.out.println(tree);
+
         tree.insert(watcher2);
 
         assertFalse(tree.getRoot().isLeafNode());
@@ -137,10 +139,10 @@ public class BinTreeTest
     {
         Watcher watcher1 = new Watcher(-1, "watcher1", -90, -45);
 
-        assertNull(tree.find(watcher1.getCoordinate()));
+        assertEquals(-1, tree.find(watcher1.getCoordinate()));
 
         tree.insert(watcher1);
-        assertEquals(watcher1, tree.find(watcher1.getCoordinate()));
+        assertEquals(watcher1.getHandle(), tree.find(watcher1.getCoordinate()));
 
         Watcher watcher2 = new Watcher(-1, "watcher2", -90, -50);
         tree.insert(watcher2);
@@ -254,7 +256,7 @@ public class BinTreeTest
         tree.insert(alexa);
         tree.insert(john);
         tree.insert(penny);
-        tree.remove(john.getCoordinate());
+        assertTrue(tree.remove(john.getCoordinate()));
 
         tree.organize();
 
@@ -279,7 +281,32 @@ public class BinTreeTest
 
         System.out.println("-------------------------\n\n" + tree
             + "\n\n---------------------------\n");
+    }
 
+    /**
+     * Test method for {@link BinTree#handleToBinNode(int)}.
+     * @throws IOException
+     */
+    public void testHandleToBinNode() throws IOException {
+        BinInternalNode node = new BinInternalNode(-1, 47, 32);
+        node.setMyHandle(memoryManager.write(node.serialize()));
+        BinNode actual = tree.handleToBinNode(node.getMyHandle());
+        assertTrue(actual instanceof BinInternalNode);
+        BinInternalNode internalActual = (BinInternalNode)actual;
+        assertEquals(node.getLeft(), internalActual.getLeft());
+        assertEquals(node.getRight(), internalActual.getRight());
+        assertEquals(node.getMyHandle(), internalActual.getMyHandle());
+    }
+
+    /**
+     * Test method for {@link BinTree#handleToCoordinate(int)}.
+     * @throws IOException
+     */
+    public void testHandleToCoordinate() throws IOException {
+        Watcher w = new Watcher(-1, "name", -45.6, 60.3);
+        w.setHandle(memoryManager.write(w.serialize()));
+        Coordinate actual = tree.handleToCoordinate(w.getHandle());
+        assertEquals(w.getCoordinate(), actual);
     }
 
 }

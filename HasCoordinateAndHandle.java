@@ -58,4 +58,5 @@ public interface HasCoordinateAndHandle
      * @return byte array of object
      */
     public byte[] serialize();
+
 }

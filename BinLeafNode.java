@@ -1,3 +1,5 @@
+import java.nio.ByteBuffer;
+
 // -------------------------------------------------------------------------
 /**
  * Class that represents a leaf node for a BinTree. It contains only a single
@@ -104,9 +106,13 @@ public class BinLeafNode
         byteArray[0] = 0;
         byteArray[1] = 7;
         byteArray[2] = 1;
+
+        byte[] elementArr = new byte[4];
+        ByteBuffer.wrap(elementArr).putInt(element);
+
         for (int i = 0; i < 4; i++)
         {
-            byteArray[i + 3] = (byte)((element >> (24 - 8 * i)) & 0xFF);
+            byteArray[i + 3] = elementArr[i];
         }
         return byteArray;
     }
