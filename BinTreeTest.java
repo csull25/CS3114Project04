@@ -57,7 +57,7 @@ public class BinTreeTest
             watcher1.getHandle(),
             ((BinLeafNode)tree.getRoot()).getElement());
 
-        //System.out.println(tree);
+        // System.out.println(tree);
 
         tree.insert(watcher2);
 
@@ -190,19 +190,17 @@ public class BinTreeTest
         tree.insert(watcher3);
         tree.insert(watcher4);
 
+        System.out.println("\nBegin regionSearch test\n");
         assertEquals(9, tree.regionSearch(-180, 180, -90, 90));
-
         System.out.println("\n");
-
         assertEquals(6, tree.regionSearch(-180, -1, -90, 90));
-
         System.out.println("\n");
-
         assertEquals(7, tree.regionSearch(-180, 180, 0, 90));
-
         System.out.println("\n");
-
         assertEquals(4, tree.regionSearch(-140, -130, 40, 50));
+        System.out.println("\nEnd regionSearch test\n"
+            + "--------------------------------------------\n");
+
     }
 
 
@@ -259,35 +257,31 @@ public class BinTreeTest
         assertTrue(tree.remove(john.getCoordinate()));
 
         tree.organize();
-
-        assertEquals(
-            "I\nI\nRiley -105.7 -24.3\nI\nTristan -117.1 5.0\nI\nDominic -79.2 37.3\nI\nAlexa -50.2 88.4\nNevaeh -11.0 63.1\nPenny 55.3 -80.3",
-            tree.toString());
+        assertEquals("I\nI\nRiley -105.7 -24.3\nI\nTristan -117.1 5.0\nI\n"
+            + "Dominic -79.2 37.3\nI\nAlexa -50.2 88.4\n"
+            + "Nevaeh -11.0 63.1\nPenny 55.3 -80.3", tree.toString());
 
         tree.remove(nevaeh.getCoordinate());
         tree.remove(riley.getCoordinate());
         tree.remove(dominic.getCoordinate());
-
         tree.organize();
-
         tree.remove(tristan.getCoordinate());
-
         tree.organize();
-
-        System.out.println("-------------------------\n\n" + tree
-            + "\n\n---------------------------\n");
 
         tree.remove(alexa.getCoordinate());
-
-        System.out.println("-------------------------\n\n" + tree
-            + "\n\n---------------------------\n");
+        tree.organize();
+        assertEquals("Penny 55.3 -80.3", tree.toString());
     }
+
 
     /**
      * Test method for {@link BinTree#handleToBinNode(int)}.
+     *
      * @throws IOException
      */
-    public void testHandleToBinNode() throws IOException {
+    public void testHandleToBinNode()
+        throws IOException
+    {
         BinInternalNode node = new BinInternalNode(-1, 47, 32);
         node.setMyHandle(memoryManager.write(node.serialize()));
         BinNode actual = tree.handleToBinNode(node.getMyHandle());
@@ -298,11 +292,15 @@ public class BinTreeTest
         assertEquals(node.getMyHandle(), internalActual.getMyHandle());
     }
 
+
     /**
      * Test method for {@link BinTree#handleToCoordinate(int)}.
+     *
      * @throws IOException
      */
-    public void testHandleToCoordinate() throws IOException {
+    public void testHandleToCoordinate()
+        throws IOException
+    {
         Watcher w = new Watcher(-1, "name", -45.6, 60.3);
         w.setHandle(memoryManager.write(w.serialize()));
         Coordinate actual = tree.handleToCoordinate(w.getHandle());

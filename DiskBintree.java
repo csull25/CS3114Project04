@@ -155,9 +155,9 @@ public class DiskBintree
         double y = Double.parseDouble(command.substring(space1, space2));
 
         // create watcher and set its name
-        Watcher watcher = new Watcher(0, "", x, y);
-        watcher.setHandle(watcherBinTree.find(watcher.getCoordinate()));
-        watcher.setName(handleToName(watcher.getHandle()));
+        Watcher watcher = new Watcher(-1, "", x, y);
+        watcher.setName(handleToName(watcherBinTree.find(watcher
+            .getCoordinate())));
 
         // remove watcher form the BinTree
         watcherBinTree.remove(watcher.getCoordinate());
