@@ -287,4 +287,8 @@ public class MemoryManager
     {
         pool.closeFile();
     }
+
+    public String toString() {
+        return pool.toString();
+    }
 }

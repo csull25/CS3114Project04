@@ -18,6 +18,7 @@ public class BufferPool
     private int                BLOCK_SIZE;
     private int                FILE_SIZE;
     private LinkedList<Buffer> pool;
+    private Buffer[]           buffArr;
     private RandomAccessFile   file;
     private byte[]             tempArray;
     private int                cacheHits;
@@ -41,12 +42,14 @@ public class BufferPool
         BLOCK_SIZE = 4096;
         // create linked list of buffers, open file, create pointer tempArray
         this.pool = new LinkedList<Buffer>();
+        this.buffArr = new Buffer[numBuffers];
         this.file = new RandomAccessFile(fileName, "rw");
         this.tempArray = new byte[BLOCK_SIZE];
 
         // initialize all the statistics to zero
         cacheHits = cacheMisses = diskReads = diskWrites = 0;
 
+        Buffer newBuf;
         // initialize the appropriate number of buffers
         for (int i = 0; i < numBuffers; i++)
         {
@@ -54,7 +57,9 @@ public class BufferPool
             file.read(tempArray);
             cacheMisses++;
             diskReads++;
-            pool.append(new Buffer(tempArray, i));
+            newBuf = new Buffer(tempArray, i);
+            pool.append(newBuf);
+            buffArr[i] = newBuf;
         }
     }
 
@@ -78,6 +83,7 @@ public class BufferPool
 
         // create linked list of buffers, open file, create pointer tempArray
         this.pool = new LinkedList<Buffer>();
+        this.buffArr = new Buffer[numBuffers];
         this.file = new RandomAccessFile(fileName, "rw");
         this.tempArray = new byte[BLOCK_SIZE];
 
@@ -86,6 +92,7 @@ public class BufferPool
         // initialize all the statistics to zero
         cacheHits = cacheMisses = diskReads = diskWrites = 0;
 
+        Buffer newBuf;
         // initialize the appropriate number of buffers
         for (int i = 0; i < numBuffers; i++)
         {
@@ -93,7 +100,9 @@ public class BufferPool
             file.read(tempArray);
             cacheMisses++;
             diskReads++;
-            pool.append(new Buffer(tempArray, i));
+            newBuf = new Buffer(tempArray, i);
+            pool.append(newBuf);
+            buffArr[i] = newBuf;
         }
     }
 
@@ -336,7 +345,8 @@ public class BufferPool
             }
             while (blocks.peek() != first);
         }
-        else {
+        else
+        {
             blocks.inqueue(new FreeBlock(FILE_SIZE, BLOCK_SIZE));
         }
         expandFile();
@@ -353,6 +363,22 @@ public class BufferPool
     {
         this.flushBuffers();
         this.file.close();
+    }
+
+
+    // ----------------------------------------------------------
+    /**
+     * Output contents of all buffers to std out
+     */
+    public String toString()
+    {
+        String ret = "";
+        for (int i = 0; i < buffArr.length; i++)
+        {
+            ret = ret + "Block ID of buffer" + i + " is "
+                + buffArr[i].getBlockNumber() + "\n";
+        }
+        return ret;
     }
 
 }

@@ -93,6 +93,7 @@ public class DiskBintree
             }
         }
         commandFile.close();
+        memoryManager.closeFile();
     }
 
 
@@ -178,7 +179,7 @@ public class DiskBintree
     private static void debugRequest()
     {
         System.out.println(watcherBinTree); // toString()
-        System.out.println("XXXXXXXXXXX TO-DO XXXXXXXXXXXX");
+        System.out.println(memoryManager);
     }
 
 
