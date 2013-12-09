@@ -375,8 +375,13 @@ public class BufferPool
         String ret = "";
         for (int i = 0; i < buffArr.length; i++)
         {
+            if (buffArr[i].getBlockNumber() != -1) {
             ret = ret + "Block ID of buffer" + i + " is "
                 + buffArr[i].getBlockNumber() + "\n";
+            }
+            else {
+                ret = ret + "Block ID of buffer" + i + " Empty\n";
+            }
         }
         return ret;
     }
