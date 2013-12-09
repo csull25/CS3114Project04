@@ -145,9 +145,8 @@ public class DiskBintree
     private static void watcherDeleteRequest(String command)
         throws IOException
     {
-        // parse the watcher's name from the request, then remove the watcher
-        // from the linked list, and print the appropriate message
-
+        // parse the coordinate from the request, then removes the watcher
+        // from the BinTree, and print the appropriate message
         int space1 = command.indexOf(" ") + 1;
         int space2 = command.indexOf(" ", space1);
         double x = Double.parseDouble(command.substring(space1, space2));
@@ -155,7 +154,10 @@ public class DiskBintree
         space2 = command.indexOf(" ", space1);
         double y = Double.parseDouble(command.substring(space1, space2));
 
+        // create watcher and set its name
         Watcher watcher = new Watcher(0, "", x, y);
+        watcher.setHandle(watcherBinTree.find(watcher.getCoordinate()));
+        watcher.setName(handleToName(watcher.getHandle()));
 
         // remove watcher form the BinTree
         watcherBinTree.remove(watcher.getCoordinate());
@@ -172,5 +174,26 @@ public class DiskBintree
     private static void debugRequest()
     {
         System.out.println(watcherBinTree); // toString()
+    }
+
+
+    /**
+     * Returns the name of a Watcher that is represented at the given handle.
+     *
+     * @param handle
+     *            the handle of this watcher
+     * @return a String representing the Watcher's name
+     * @throws IOException
+     */
+    private static String handleToName(int handle)
+        throws IOException
+    {
+        byte[] byteArray = memoryManager.read(handle);
+        char[] name = new char[(byteArray[0] << 8) + byteArray[1] - 18];
+        for (int i = 0; i < name.length; i++)
+        {
+            name[i] = (char)byteArray[i + 18];
+        }
+        return new String(name);
     }
 }

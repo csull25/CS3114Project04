@@ -56,6 +56,14 @@ public class WatcherTest
         assertEquals("tester", watcher.getName());
     }
 
+    /**
+     * Test method for {@link Watcher#setName(String)}.
+     */
+    public void testSetName()
+    {
+        watcher.setName("test");
+        assertEquals("test", watcher.getName());
+    }
 
     /**
      * Test method for {@link Watcher#getLongitude()}.

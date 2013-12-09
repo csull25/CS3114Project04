@@ -81,6 +81,16 @@ public class Watcher
 
 
     /**
+     * @param name
+     *            the name to be set
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+
+    /**
      * @return the longitude
      */
     public double getLongitude()
