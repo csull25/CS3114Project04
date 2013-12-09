@@ -87,7 +87,7 @@ public class DiskBintree
                 debugRequest();
             }
         }
-
+        commandFile.close();
     }
 
 
@@ -171,10 +171,6 @@ public class DiskBintree
      */
     private static void debugRequest()
     {
-        if (!watcherBinarySearchTree.isEmpty())
-        {
-            System.out.println(watcherBinarySearchTree); // toString()
-        }
         System.out.println(watcherBinTree); // toString()
     }
 }
