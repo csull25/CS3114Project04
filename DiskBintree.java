@@ -86,6 +86,7 @@ public class DiskBintree
             {
                 debugRequest();
             }
+            else if (command.contains("search"));
         }
         commandFile.close();
     }
