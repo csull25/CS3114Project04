@@ -386,7 +386,7 @@ public class BufferPool
             }
             else
             {
-                ret = ret + "Block ID of buffer" + i + " Empty\n";
+                ret = ret + "Block ID of buffer" + i + " is Empty\n";
             }
         }
         return ret.substring(0, ret.length() - 1); // drop last newline

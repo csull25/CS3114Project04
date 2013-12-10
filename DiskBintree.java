@@ -129,7 +129,7 @@ public class DiskBintree
         {
             // add to BinTree
             watcherBinTree.insert(watcher);
-            System.out.println(watcher + " is added to the bintree");
+            System.out.println(watcher + " is added into the bintree");
         }
         // coordinates already in BinTree
         else
