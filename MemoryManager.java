@@ -145,11 +145,15 @@ public class MemoryManager
     public byte[] read(int h)
         throws IOException
     {
+        if (h < 0)
+        {
+            return null;
+        }
         // get size of data
         byte[] size_bytes = pool.getData(h, SIZE_BYTES);
 
         // get handle's data and return bytes
-        return pool.getData(h, bytesToShort(size_bytes));
+        return read(h, bytesToShort(size_bytes));
     }
 
 
@@ -167,6 +171,10 @@ public class MemoryManager
     public byte[] read(int h, int size)
         throws IOException
     {
+        if (h < 0)
+        {
+            return null;
+        }
         return pool.getData(h, size);
     }
 
@@ -281,20 +289,22 @@ public class MemoryManager
         pool.closeFile();
     }
 
-    public String toString() {
+
+    public String toString()
+    {
         return pool.toString();
     }
+
 
     // ----------------------------------------------------------
     /**
      * Print buffer stats
      */
-    public void printBufferStats() {
-        System.out.println(
-            "Number of cache hits: " + pool.getCacheHits() +
-            "\nNumber of cache misses: " + pool.getCacheMisses() +
-            "\nNumber of disk reads: " + pool.getDiskReads() +
-            "\nNumber of disk writes: " + pool.getDiskWrites()
-            );
+    public void printBufferStats()
+    {
+        System.out.println("Number of cache hits: " + pool.getCacheHits()
+            + "\nNumber of cache misses: " + pool.getCacheMisses()
+            + "\nNumber of disk reads: " + pool.getDiskReads()
+            + "\nNumber of disk writes: " + pool.getDiskWrites());
     }
 }
