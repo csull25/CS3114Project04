@@ -18,10 +18,9 @@ public class MemoryManagerTest extends TestCase
     // ----------------------------------------------------------
     /**
      * Setup small file with 1 buffer
-     * @throws Exception
+     * @throws IOException
      */
-    public void setUp() throws Exception {
-        super.setUp();
+    public void setup() throws IOException {
         man = new MemoryManager(1, 1024);
     }
 
@@ -45,10 +44,20 @@ public class MemoryManagerTest extends TestCase
 
     // ----------------------------------------------------------
     /**
+     * Tests constructor with small file and 1 buffer
+     * @throws IOException
+     */
+    public void testConstructor() throws IOException {
+        setup();
+    }
+
+    // ----------------------------------------------------------
+    /**
      * Simple read/write tests
      * @throws IOException
      */
     public void testSimpleReadWrite() throws IOException {
+        setup();
         byte[] w = {0, 3, 3};
         man.write(w);
         byte[] b = man.read(0);
@@ -62,6 +71,7 @@ public class MemoryManagerTest extends TestCase
      * @throws IOException
      */
     public void testComplexReadWrite() throws IOException {
+        setup();
         byte[] w = complexBytes();
 
         byte[] b = man.read(man.write(w));
@@ -75,6 +85,7 @@ public class MemoryManagerTest extends TestCase
      * @throws IOException
      */
     public void testSimpleRemove() throws IOException {
+        setup();
         byte[] w = {0, 3, 3};
         int pos = man.write(w);
         man.remove(pos);
@@ -87,6 +98,7 @@ public class MemoryManagerTest extends TestCase
      * @throws IOException
      */
     public void testComplexRemove() throws IOException {
+        setup();
         byte[] w = {0, 3, 3};
         int pos = man.write(w);
         man.remove(pos);
@@ -106,6 +118,7 @@ public class MemoryManagerTest extends TestCase
      * @throws IOException
      */
     public void testComplexRemove2() throws IOException {
+        setup();
         byte[] w = complexBytes();
         int pos = man.write(w);
         man.remove(pos);

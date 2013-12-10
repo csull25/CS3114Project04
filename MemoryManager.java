@@ -149,7 +149,7 @@ public class MemoryManager
         byte[] size_bytes = pool.getData(h, SIZE_BYTES);
 
         // get handle's data and return bytes
-        return read(h, bytesToShort(size_bytes));
+        return pool.getData(h, bytesToShort(size_bytes));
     }
 
 
