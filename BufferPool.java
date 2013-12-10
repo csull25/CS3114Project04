@@ -53,10 +53,6 @@ public class BufferPool
         // initialize the appropriate number of buffers
         for (int i = 0; i < numBuffers; i++)
         {
-//            file.seek(i * BLOCK_SIZE);
-//            file.read(tempArray);
-//            cacheMisses++;
-//            diskReads++;
             newBuf = new Buffer(tempArray, -1);
             pool.append(newBuf);
             buffArr[i] = newBuf;
@@ -96,10 +92,6 @@ public class BufferPool
         // initialize the appropriate number of buffers
         for (int i = 0; i < numBuffers; i++)
         {
-//            file.seek(i * BLOCK_SIZE);
-//            file.read(tempArray);
-//            cacheMisses++;
-//            diskReads++;
             newBuf = new Buffer(tempArray, -1);
             pool.append(newBuf);
             buffArr[i] = newBuf;
@@ -213,10 +205,11 @@ public class BufferPool
 
     // ----------------------------------------------------------
     /**
-     * Place a description of your method here.
+     * Get buffer based on byte location
      *
      * @param pos
-     * @return
+     *            position of byte
+     * @return Buffer holding byte at given position
      * @throws IOException
      */
     private Buffer getBufferByPosition(int pos)
@@ -247,7 +240,6 @@ public class BufferPool
         {
             buf = getBufferByPosition(pos + i);
             b[i] = buf.getByte(pos + i);
-// System.out.println("byte " + i +": "+ b[i]);
         }
         return b;
     }

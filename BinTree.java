@@ -33,21 +33,8 @@ public class BinTree<T extends HasCoordinateAndHandle>
         this.root = null;
         this.memoryManager = memoryManager;
         this.emptyLeafNode = new BinLeafNode(-1, -1); // -1 for null data
-        // writeNewBinNode(emptyLeafNode);
     }
 
-
-    /**
-     * Create a BinTree object.
-     *
-     * @param root
-     *            the root of the tree
-     */
-    // public BinTree(BinNode root)
-    // {
-    // this.root = root;
-    // emptyLeafNode = new BinLeafNode(null);
-    // }
 
     /**
      * Gets the root of the tree.
