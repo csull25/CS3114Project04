@@ -8,7 +8,7 @@ import java.io.IOException;
  * project represents a BinTree that is stored in a disk file. It takes commands
  * from the command file.
  *
- * @author Alex Kallam ( ?? )
+ * @author Alex Kallam (aakallam)
  * @author Connor J. Sullivan (csull)
  * @version 2013.12.08
  */
