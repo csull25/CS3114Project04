@@ -119,7 +119,6 @@ public class BinTree<T extends HasCoordinateAndHandle>
             {
                 BinInternalNode newRoot = new BinInternalNode(-1);
                 writeNewBinNode(newRoot);
-
                 if (handleToCoordinate(((BinLeafNode)root).getElement())
                     .getLongitude() < 0.0)
                 {
@@ -1062,7 +1061,6 @@ public class BinTree<T extends HasCoordinateAndHandle>
             if (node != emptyLeafNode)
             {
                 int element = ((BinLeafNode)node).getElement();
-
                 if (Math.pow(handleToCoordinate(element).getLatitude()
                     - (minLatitude + maxLatitude) / 2.0, 2)
                     + Math.pow(handleToCoordinate(element).getLongitude()
@@ -1113,7 +1111,6 @@ public class BinTree<T extends HasCoordinateAndHandle>
                             currentMaxLatitude);
                 }
                 else if (minLongitude + 180 < (currentMinLongitude + currentMaxLongitude) / 2.0)
-
                 {
                     return 1 + regionSearch(
                         handleToBinNode(((BinInternalNode)node).getLeft()),
