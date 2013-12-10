@@ -35,5 +35,17 @@ public class DiskBintreeTest extends TestCase
         args[1] = "10";  // number of buffers
         args[2] = "10";  // size of buffer in bytes
         runTest(args);
+        DiskBintree code_coverage = new DiskBintree();
+        assertNotNull(code_coverage);
+        String[] codeCoverage = {"arg"};
+        Exception ex = null;
+        try {
+            runTest(codeCoverage);
+        }
+        catch (Exception e) {
+            ex = e;
+            assertTrue(e instanceof IllegalArgumentException);
+        }
+        assertNotNull(ex);
     }
 }
