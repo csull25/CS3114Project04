@@ -75,8 +75,8 @@ public class BufferPoolTest
         throws IOException
     {
         assertEquals(0, pool.getCacheHits());
-        assertEquals(1, pool.getCacheMisses());
-        assertEquals(1, pool.getDiskReads());
+        assertEquals(0, pool.getCacheMisses());
+        assertEquals(0, pool.getDiskReads());
         assertEquals(0, pool.getDiskWrites());
         pool.closeFile();
         file.close();
