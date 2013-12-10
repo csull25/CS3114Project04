@@ -53,11 +53,11 @@ public class BufferPool
         // initialize the appropriate number of buffers
         for (int i = 0; i < numBuffers; i++)
         {
-            file.seek(i * BLOCK_SIZE);
-            file.read(tempArray);
-            cacheMisses++;
-            diskReads++;
-            newBuf = new Buffer(tempArray, i);
+//            file.seek(i * BLOCK_SIZE);
+//            file.read(tempArray);
+//            cacheMisses++;
+//            diskReads++;
+            newBuf = new Buffer(tempArray, -1);
             pool.append(newBuf);
             buffArr[i] = newBuf;
         }
@@ -96,11 +96,11 @@ public class BufferPool
         // initialize the appropriate number of buffers
         for (int i = 0; i < numBuffers; i++)
         {
-            file.seek(i * BLOCK_SIZE);
-            file.read(tempArray);
-            cacheMisses++;
-            diskReads++;
-            newBuf = new Buffer(tempArray, i);
+//            file.seek(i * BLOCK_SIZE);
+//            file.read(tempArray);
+//            cacheMisses++;
+//            diskReads++;
+            newBuf = new Buffer(tempArray, -1);
             pool.append(newBuf);
             buffArr[i] = newBuf;
         }
@@ -269,7 +269,6 @@ public class BufferPool
         Buffer buf;
         for (int i = 0; i < b.length; i++)
         {
-// System.out.println("byte " + i +": "+ b[i]);
             buf = getBufferByPosition(pos + i);
             buf.setByte(b[i], pos + i);
         }
@@ -339,11 +338,15 @@ public class BufferPool
                 {
                     // last free block was at end of file and has been expanded
                     block.setSize(block.getSize() + BLOCK_SIZE);
-                    break; // jump to file expansion
+                    expandFile();
+                    return;
                 }
                 blocks.inqueue(blocks.dequeue());
             }
             while (blocks.peek() != first);
+            blocks.inqueue(new FreeBlock(FILE_SIZE, BLOCK_SIZE));
+            expandFile();
+            return;
         }
         else
         {
@@ -375,15 +378,18 @@ public class BufferPool
         String ret = "";
         for (int i = 0; i < buffArr.length; i++)
         {
-            if (buffArr[i].getBlockNumber() != -1) {
-            ret = ret + "Block ID of buffer" + i + " is "
-                + buffArr[i].getBlockNumber() + "\n";
+            if (buffArr[i].getBlockNumber() != -1)
+            {
+                ret =
+                    ret + "Block ID of buffer" + i + " is "
+                        + buffArr[i].getBlockNumber() + "\n";
             }
-            else {
+            else
+            {
                 ret = ret + "Block ID of buffer" + i + " Empty\n";
             }
         }
-        return ret.substring(0, ret.length() - 3);
+        return ret.substring(0, ret.length() - 1); // drop last newline
     }
 
 }

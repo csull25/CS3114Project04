@@ -91,6 +91,7 @@ public class DiskBintree
                 searchRequest(command);
             }
         }
+        memoryManager.printBufferStats();
         commandFile.close();
         memoryManager.closeFile();
     }

@@ -95,10 +95,8 @@ public class MemoryManager
         throws IOException
     {
         FreeBlock block;
-// System.out.println("free blocks: " + free_blocks.getLength());
         if (free_blocks.getLength() == 0)
         {
-// System.out.println("no empty blocks");
             pool.expandFile(free_blocks);
             return findSpace(size);
         }
@@ -125,13 +123,11 @@ public class MemoryManager
             else
             {
                 // jump this data and go to next
-// System.out.println("size: " + block.getSize() + "\nsize needed: " + size);
                 free_blocks.inqueue(block);
             }
         }
         while (next_pos != free_blocks.peek());
         // no room so add more to file size
-// System.out.println("empty blocks are too small, expand file");
         pool.expandFile(free_blocks);
         return findSpace(size);
     }
@@ -152,7 +148,6 @@ public class MemoryManager
         // get size of data
         byte[] size_bytes = pool.getData(h, SIZE_BYTES);
 
-// System.out.println(h + " size to get: " + bytesToShort(size_bytes));
         // get handle's data and return bytes
         return pool.getData(h, bytesToShort(size_bytes));
     }
@@ -233,8 +228,6 @@ public class MemoryManager
                 // previous empty block is adjacent to newly freed
                 if (b.getPosition() + b.getSize() == h)
                 {
-                    // System.out.println("pos: " +
-// b.getPosition());............
                     // previous block should be merged with new
                     b.setSize(b.getSize() + size);
                     if (b.getPosition() + b.getSize() == p.getPosition())
@@ -290,5 +283,18 @@ public class MemoryManager
 
     public String toString() {
         return pool.toString();
+    }
+
+    // ----------------------------------------------------------
+    /**
+     * Print buffer stats
+     */
+    public void printBufferStats() {
+        System.out.println(
+            "Number of cache hits: " + pool.getCacheHits() +
+            "\nNumber of cache misses: " + pool.getCacheMisses() +
+            "\nNumber of disk reads: " + pool.getDiskReads() +
+            "\nNumber of disk writes: " + pool.getDiskWrites()
+            );
     }
 }
