@@ -383,7 +383,7 @@ public class BufferPool
                 ret = ret + "Block ID of buffer" + i + " Empty\n";
             }
         }
-        return ret;
+        return ret.substring(0, ret.length() - 3);
     }
 
 }

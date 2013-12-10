@@ -74,7 +74,6 @@ public class DiskBintree
         String command;
         while ((command = commandFile.readLine()) != null)
         {
-            System.out.println("\t" + command);
             if (command.contains("add"))
             {
                 watcherAddRequest(command);
