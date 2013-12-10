@@ -405,6 +405,21 @@ public class BinTree<T extends HasCoordinateAndHandle>
         // method.
         while (organize((BinInternalNode)root))
             ;
+        leftChild = handleToBinNode(((BinInternalNode)root).getLeft());
+        rightChild =
+            handleToBinNode(((BinInternalNode)root).getRight());
+        if (leftChild == emptyLeafNode && rightChild.isLeafNode())
+        {
+            memoryManager.remove(root.getMyHandle());
+            root = rightChild;
+            return;
+        }
+        else if (leftChild.isLeafNode() && rightChild == emptyLeafNode)
+        {
+            memoryManager.remove(root.getMyHandle());
+            root = leftChild;
+            return;
+        }
     }
 
 

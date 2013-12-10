@@ -1,0 +1,1024 @@
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
+add -125.1 -38.5 stress1
+debug
+add -105.0 -24.3 stress2
+debug
+delete -125.1 -38.5 
+debug
+delete -105.0 -24.3 
+debug
